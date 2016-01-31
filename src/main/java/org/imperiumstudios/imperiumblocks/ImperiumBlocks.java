@@ -90,12 +90,12 @@ public class ImperiumBlocks {
 	public static CreativeTabs impTab = new CreativeTabsIMP("ImperiumBlocks");
 	
 	public static final String NAME = "Imperium Blocks"; //Used in the GUI parts of the mod
-    public static final String MODID = "imperiumblocks";
-    public static final String VERSION = "1.0";
+	public static final String MODID = "imperiumblocks";
+	public static final String VERSION = "1.0";
     
-    private String modJar;
-    public static Light light;
-    public static org.apache.logging.log4j.Logger log;
+	private String modJar;
+	public static Light light;
+	public static org.apache.logging.log4j.Logger log;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) throws IOException {
@@ -105,8 +105,8 @@ public class ImperiumBlocks {
         //patchJar();
     }
     
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent e) throws Exception {
+	@Mod.EventHandler
+	public void init(FMLInitializationEvent e) throws Exception {
 		Properties blockProps = new Properties();
 		InputStream inputStream;
 
@@ -134,26 +134,24 @@ public class ImperiumBlocks {
 					
 					GameRegistry.registerBlock(block, block.getUnlocalizedName().substring(5));
 				}
-
 			} else throw new FileNotFoundException("property file '" + blockFile + "' not found in the classpath");
-
 		}
 
-        light = new Light();
-        GameRegistry.registerBlock(light, "light");
+		light = new Light();
+		GameRegistry.registerBlock(light, "light");
 
-        //lightOn = new LightItem();
-        LightRemoveItem lightOff = new LightRemoveItem();
+		//lightOn = new LightItem();
+		LightRemoveItem lightOff = new LightRemoveItem();
 		LightItem lightOn = new LightItem();
 
-        GameRegistry.registerItem(lightOn, "lightOn");
-        GameRegistry.registerItem(lightOff, "lightOff");
+		GameRegistry.registerItem(lightOn, "lightOn");
+		GameRegistry.registerItem(lightOff, "lightOff");
 
-        //Glowstone in the middle and the edges, glass in the free slots
-        GameRegistry.addShapedRecipe(new net.minecraft.item.ItemStack(lightOn, 2), "OgO", "gOg", "OgO", 'O', net.minecraft.init.Blocks.glowstone, 'g', net.minecraft.init.Blocks.glass);
+		//Glowstone in the middle and the edges, glass in the free slots
+		GameRegistry.addShapedRecipe(new net.minecraft.item.ItemStack(lightOn, 2), "OgO", "gOg", "OgO", 'O', net.minecraft.init.Blocks.glowstone, 'g', net.minecraft.init.Blocks.glass);
 
-        //Glowstone in the middle, surrounded by cleanstone
-        GameRegistry.addShapedRecipe(new net.minecraft.item.ItemStack(lightOff, 1), "SSS", "SOS", "SSS", 'S', net.minecraft.init.Blocks.stone, 'O', net.minecraft.init.Blocks.glowstone);
+		//Glowstone in the middle, surrounded by cleanstone
+		GameRegistry.addShapedRecipe(new net.minecraft.item.ItemStack(lightOff, 1), "SSS", "SOS", "SSS", 'S', net.minecraft.init.Blocks.stone, 'O', net.minecraft.init.Blocks.glowstone);
 	}
     
 	public void patchJar() throws IOException {
@@ -188,4 +186,5 @@ public class ImperiumBlocks {
 		
 		new FMLCommonHandler().exitJava(0, false);
 	}
+	
 }
