@@ -1,0 +1,6 @@
+tile.blockTest.name=Test Block
+tile.kupferdach.name=Kupferdach
+tile.sandstein.name=Sandstein
+tile.stahltraeger.name=Stahltraeger
+
+itemGroup.ImperiumBlocks=ImperiumBlocks

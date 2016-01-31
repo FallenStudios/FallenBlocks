@@ -1,0 +1,16 @@
+[
+{
+  "modid": "imperiumblocks",
+  "name": "ImperiumBlocks",
+  "description": "Add custom mods to your game!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["ImperiumStudios"],
+  "credits": "Imperium1871.de & kevyn.lu",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
