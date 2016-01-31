@@ -30,6 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFenceGate;
+import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.IBlockAccess;
 import org.imperiumstudios.imperiumblocks.Helper;
 import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 
@@ -75,5 +80,13 @@ public class IMPFence extends BlockFence {
 	@Override
 	public IIcon getIcon(int side, int metadata) {
 	    return blockIcon;
+	}
+
+	@Override
+	public boolean canConnectFenceTo(IBlockAccess blockAccess, int x, int y, int z)
+	{
+		Block block = blockAccess.getBlock(x, y, z);
+		boolean su = super.canConnectFenceTo(blockAccess, x, y, z);
+		return block instanceof BlockFenceGate || su;
 	}
 }
