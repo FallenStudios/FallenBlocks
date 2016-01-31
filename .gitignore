@@ -1,5 +1,18 @@
 *.class
 
+.classpath
+*.project
+*.prefs
+bin/
+eclipse/
+*.class
+.gradle/
+gradle/
+*.txt
+*.bat
+*.gradle
+gradlew
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
