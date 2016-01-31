@@ -97,13 +97,13 @@ public class ImperiumBlocks {
 	public static Light light;
 	public static org.apache.logging.log4j.Logger log;
 
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent e) throws IOException {
-        log = e.getModLog();
-        modJar = Minecraft.getMinecraft().mcDataDir + File.separator +"mods"+ File.separator +"ImperiumBlocks-"+ VERSION +".jar";
+	@Mod.EventHandler
+	public void preInit(FMLPreInitializationEvent e) throws IOException {
+		log = e.getModLog();
+		modJar = Minecraft.getMinecraft().mcDataDir + File.separator +"mods"+ File.separator +"ImperiumBlocks-"+ VERSION +".jar";
 
-        //patchJar();
-    }
+		//patchJar();
+	}
     
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e) throws Exception {
