@@ -2,17 +2,12 @@ package org.imperiumstudios.imperiumblocks.Special;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.IconFlipped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 import org.imperiumstudios.imperiumblocks.models.IMPDoor;
@@ -20,19 +15,22 @@ import org.imperiumstudios.imperiumblocks.models.IMPDoor;
 
 public class DoorItem extends ItemDoor {
 
-    IMPDoor door;
-    IIcon icon;
+    private IMPDoor door;
+
+    @SideOnly(Side.CLIENT)
+    private IIcon icon;
 
     public DoorItem(IMPDoor door) {
         super(door.getMaterial());
-        setCreativeTab(ImperiumBlocks.impTab);
+        setCreativeTab(ImperiumBlocks.miscTab);
+        setUnlocalizedName(door.getUnlocalizedName().substring(5).replaceFirst("Door", "") + "_doorItem");
         this.door = door;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg) {
-        String textureName = door.getUnlocalizedName().substring(5).replace("Door", "");
+        String textureName = door.getUnlocalizedName().substring(5).replaceFirst("Door", "");
 
         icon = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName + "_doorItem");
     }

@@ -24,24 +24,24 @@
  * THE SOFTWARE.
  */
 
-package org.imperiumstudios.imperiumblocks;
+package org.imperiumstudios.imperiumblocks.CreativeTabs;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
-public class CreativeTabsIMP extends CreativeTabs {
-	
+public abstract class CreativeTabsIMP extends CreativeTabs {
+
+	Item icon;
+
 	public CreativeTabsIMP(String tabLabel) {
 		super(tabLabel);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Item getTabIconItem() {
-		return Item.getItemFromBlock(Blocks.dirt);
-	}
+	abstract public Item getTabIconItem();
 	
 }

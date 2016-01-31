@@ -10,7 +10,7 @@ import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 
 public class LightRemoveItem extends Item {
     public LightRemoveItem() {
-        setCreativeTab(CreativeTabs.tabDecorations);
+        setCreativeTab(ImperiumBlocks.miscTab);
         setUnlocalizedName("light_off");
         setTextureName(String.format("%s:%s", ImperiumBlocks.MODID, "light_off"));
     }

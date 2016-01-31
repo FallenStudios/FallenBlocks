@@ -42,6 +42,7 @@ import net.minecraft.util.IIcon;
 public class IMPTrapdoor extends BlockTrapDoor {
 
 	ImperiumBlocks Core;
+	public String name;
 	
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIcon;
@@ -50,12 +51,13 @@ public class IMPTrapdoor extends BlockTrapDoor {
         super(Helper.getMaterial(blockProps.getProperty("material", "rock")));
 
         this.Core = Core;
+		this.name = blockName.replaceFirst("Trapdoor", "");
         
         this.setBlockName(blockName);
         this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
         this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
         this.setLightLevel(Float.valueOf(blockProps.getProperty("light", "0.0F")));
-		this.setCreativeTab(ImperiumBlocks.impTab);
+		this.setCreativeTab(ImperiumBlocks.miscTab);
 		this.useNeighborBrightness = true;
 	}
 
@@ -63,7 +65,7 @@ public class IMPTrapdoor extends BlockTrapDoor {
 	@Override
 	public void registerBlockIcons(IIconRegister p_149651_1_) {
 		try {
-			textureName = this.getUnlocalizedName().substring(5).replace("Trapdoor", "");
+			textureName = name;
 			
 			List textures = new ArrayList();
 			for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/"+ textureName)) textures.add(item);

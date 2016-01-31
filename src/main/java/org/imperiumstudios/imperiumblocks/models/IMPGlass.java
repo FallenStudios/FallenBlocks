@@ -49,24 +49,26 @@ public class IMPGlass extends BlockGlass {
 	protected IIcon blockIconWest;
 	
 	ImperiumBlocks Core;
+	public String name;
 
 	public IMPGlass(ImperiumBlocks Core, String blockName, Properties blockProps) {		
         super(Helper.getMaterial(blockProps.getProperty("material", "glass")), false);
 
         this.Core = Core;
+		this.name = blockName.replaceFirst("Glass", "");
         
         this.setBlockName(blockName);
         this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
         this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
         this.setLightLevel(Float.valueOf(blockProps.getProperty("light", "0.0F")));
-		this.setCreativeTab(ImperiumBlocks.impTab);
+		this.setCreativeTab(ImperiumBlocks.blockTab);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister p_149651_1_) {
 		try {
-			textureName = this.getUnlocalizedName().substring(5).replace("Glass", "");
+			textureName = name;
 			
 			List textures = new ArrayList();
 			for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/"+ textureName)) textures.add(item);

@@ -29,41 +29,21 @@ package org.imperiumstudios.imperiumblocks;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipOutputStream;
 
-import javax.swing.JOptionPane;
-
+import net.minecraft.item.Item;
+import org.imperiumstudios.imperiumblocks.CreativeTabs.*;
 import org.imperiumstudios.imperiumblocks.Special.DoorItem;
 import org.imperiumstudios.imperiumblocks.Special.Light;
 import org.imperiumstudios.imperiumblocks.Special.LightItem;
@@ -72,7 +52,6 @@ import org.imperiumstudios.imperiumblocks.models.*;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -81,7 +60,25 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class ImperiumBlocks {
 	
 	public Utils utils = new Utils();
-	public static CreativeTabs impTab = new CreativeTabsIMP("ImperiumBlocks");
+
+    public static Item blockIcon;
+	public static CreativeTabs blockTab = new CreativeTabBlocks();
+
+    public static Item stairIcon;
+    public static CreativeTabs stairTab = new CreativeTabStairs();
+
+    public static Item slabIcon;
+    public static CreativeTabs slabTab = new CreativeTabSlabs();
+
+    public static Item fenceIcon;
+    public static CreativeTabs fenceTab = new CreativeTabFences();
+
+    public static Item wallIcon;
+    public static CreativeTabs wallTab = new CreativeTabWall();
+
+    public static Item miscIcon;
+    public static CreativeTabs miscTab = new CreativeTabMisc();
+
 	
 	public static final String NAME = "Imperium Blocks"; //Used in the GUI parts of the mod
 	public static final String MODID = "imperiumblocks";
@@ -89,6 +86,7 @@ public class ImperiumBlocks {
     
 	private String modJar;
 	public static Light light;
+
 	public static org.apache.logging.log4j.Logger log;
 
 	@Mod.EventHandler
@@ -102,7 +100,12 @@ public class ImperiumBlocks {
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e) throws Exception {
 		Properties blockProps = new Properties();
+        Properties tabProps = new Properties();
+        tabProps.load(this.getClass().getResourceAsStream("/assets/" + MODID.toLowerCase() + "/tabs.properties"));
+
 		InputStream inputStream;
+        
+        int blockNum = 0;
 
 		for(String blockFile: utils.getResourceFolderContent("assets/imperiumblocks/blocks/")) {
 			if(blockFile.equals("")) continue;		
@@ -112,25 +115,42 @@ public class ImperiumBlocks {
 			if(inputStream != null) {
 				blockProps.load(inputStream);
 				String[] blockTypes = blockProps.getProperty("types", "block").split(",");
+                String name = blockProps.getProperty("name", blockFile.replace(".properties", ""));
 				
 				for(String blockType: blockTypes) {
 					Block block = null;
+                    Item item = null;
 					
-					if(blockType.equalsIgnoreCase("block")) block = new IMPBlock(this, blockFile.replace(".properties", "") + "Block", blockProps);
-					else if(blockType.equalsIgnoreCase("wall")) block = new IMPWall(this, blockFile.replace(".properties", "") + "Wall", blockProps);
-					else if(blockType.equalsIgnoreCase("glass")) block = new IMPGlass(this, blockFile.replace(".properties", "") + "Glass", blockProps);
-					else if(blockType.equalsIgnoreCase("fence")) block = new IMPFence(this, blockFile.replace(".properties", "") + "Fence", blockProps);
-					else if(blockType.equalsIgnoreCase("gate")) block = new IMPGate(this, blockFile.replace(".properties", "") + "Gate", blockProps);
-					else if(blockType.equalsIgnoreCase("slab")) block = new IMPSlab(this, blockFile.replace(".properties", "") + "Slab", blockProps);
-					else if(blockType.equalsIgnoreCase("stair")) block = new IMPStair(this, blockFile.replace(".properties", "") + "Stair", blockProps);
-					else if(blockType.equalsIgnoreCase("trapdoor")) block = new IMPTrapdoor(this, blockFile.replace(".properties", "") + "Trapdoor", blockProps);
+					if(blockType.equalsIgnoreCase("block")) block = new IMPBlock(this, name.replaceAll(" ", "") + "Block", blockProps);
+					else if(blockType.equalsIgnoreCase("wall")) block = new IMPWall(this, name.replaceAll(" ", "") + "Wall", blockProps);
+					else if(blockType.equalsIgnoreCase("glass")) block = new IMPGlass(this, name.replaceAll(" ", "") + "Glass", blockProps);
+					else if(blockType.equalsIgnoreCase("fence")) block = new IMPFence(this, name.replaceAll(" ", "") + "Fence", blockProps);
+					else if(blockType.equalsIgnoreCase("gate")) block = new IMPGate(this, name.replaceAll(" ", "") + "Gate", blockProps);
+					else if(blockType.equalsIgnoreCase("slab")) block = new IMPSlab(this, name.replaceAll(" ", "") + "Slab", blockProps);
+					else if(blockType.equalsIgnoreCase("stair")) block = new IMPStair(this, name.replaceAll(" ", "") + "Stair", blockProps);
+					else if(blockType.equalsIgnoreCase("trapdoor")) block = new IMPTrapdoor(this, name.replaceAll(" ", "") + "Trapdoor", blockProps);
                     else if(blockType.equalsIgnoreCase("door")) {
-                        block = new IMPDoor(this, blockFile.replace(".properties", "") + "Door", blockProps);
-                        GameRegistry.registerItem(new DoorItem((IMPDoor) block), blockFile.replace(".properties", "") + "DoorItem");
+                        block = new IMPDoor(this, name + "Door", blockProps);
+                        item = new DoorItem((IMPDoor) block);
                     }
 					else continue;
 					
 					GameRegistry.registerBlock(block, block.getUnlocalizedName().substring(5));
+                    if(item != null)
+                        GameRegistry.registerItem(item, name + "Item");
+                    
+                    if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("block")))
+                        blockIcon = (item == null ? Item.getItemFromBlock(block) : item);
+                    if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("stair")))
+                        stairIcon = (item == null ? Item.getItemFromBlock(block) : item);
+                    if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("slab")))
+                        slabIcon = (item == null ? Item.getItemFromBlock(block) : item);
+                    if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("fence")))
+                        fenceIcon = (item == null ? Item.getItemFromBlock(block) : item);
+                    if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("wall")))
+                        wallIcon = (item == null ? Item.getItemFromBlock(block) : item);
+                    if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("misc")))
+                        miscIcon = (item == null ? Item.getItemFromBlock(block) : item);
 				}
 			} else throw new FileNotFoundException("property file '" + blockFile + "' not found in the classpath");
 		}
@@ -150,6 +170,27 @@ public class ImperiumBlocks {
 
 		//Glowstone in the middle, surrounded by cleanstone
 		GameRegistry.addShapedRecipe(new net.minecraft.item.ItemStack(lightOff, 1), "SSS", "SOS", "SSS", 'S', net.minecraft.init.Blocks.stone, 'O', net.minecraft.init.Blocks.glowstone);
+
+        if("light/special".equalsIgnoreCase(tabProps.getProperty("misc")))
+            miscIcon = lightOn;
+        else if("light_off/special".equalsIgnoreCase(tabProps.getProperty("misc")))
+            miscIcon = lightOff;
+
+        if(blockIcon == null)
+            blockIcon = lightOn;
+        if(stairIcon == null)
+            stairIcon = lightOn;
+        if(slabIcon == null)
+            slabIcon = lightOn;
+        if(fenceIcon == null)
+            fenceIcon = lightOn;
+        if(wallIcon == null)
+            wallIcon = lightOn;
+        if(miscIcon == null)
+            miscIcon = lightOn;
+
+        System.out.printf("%s %s %s %s %s %s", blockIcon.getUnlocalizedName(), stairIcon.getUnlocalizedName(), slabIcon.getUnlocalizedName(), fenceIcon.getUnlocalizedName(),
+                wallIcon.getUnlocalizedName(), miscIcon.getUnlocalizedName());
 	}
     
 	public void patchJar() throws IOException {

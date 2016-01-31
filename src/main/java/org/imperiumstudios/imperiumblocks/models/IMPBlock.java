@@ -45,32 +45,39 @@ public class IMPBlock extends Block {
 	
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIconBottom;
+	@SideOnly(Side.CLIENT)
 	protected IIcon blockIconEast;
+	@SideOnly(Side.CLIENT)
 	protected IIcon blockIconNord;
+	@SideOnly(Side.CLIENT)
 	protected IIcon blockIconSouth;
+	@SideOnly(Side.CLIENT)
 	protected IIcon blockIconTop;
+	@SideOnly(Side.CLIENT)
 	protected IIcon blockIconWest;
+    
+    public String name;
 	
 	public IMPBlock(ImperiumBlocks Core, String blockName, Properties blockProps) {		
         super(Helper.getMaterial(blockProps.getProperty("material", "rock")));
 
         this.Core = Core;
+        this.name = blockName.replaceFirst("Block", "");
         
         this.setBlockName(blockName);
         this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
         this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
         this.setLightLevel(Float.valueOf(blockProps.getProperty("light", "0.0F")));
-		this.setCreativeTab(ImperiumBlocks.impTab);
+		this.setCreativeTab(ImperiumBlocks.blockTab);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister p_149651_1_) {
 		try {
-
-			textureName = this.getUnlocalizedName().substring(5).replace("Block", "");
+            textureName = name;
 			ImperiumBlocks.log.info(textureName);
-			
+
 			List textures = new ArrayList();
 			for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/"+ textureName)) {
 				textures.add(item);
@@ -85,7 +92,7 @@ public class IMPBlock extends Block {
 				blockIconTop = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
 				blockIconWest = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
 			}
-				
+
 			if(textures.contains("bottom.png") && textures.contains("east.png") && textures.contains("north.png") &&
 					textures.contains("south.png") && textures.contains("top.png") && textures.contains("west.png")) {
 				blockIconBottom = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/bottom");

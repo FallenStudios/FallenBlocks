@@ -9,7 +9,7 @@ import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 
 public class LightItem extends Item {
     public LightItem() {
-        setCreativeTab(CreativeTabs.tabDecorations);
+        setCreativeTab(ImperiumBlocks.miscTab);
         setUnlocalizedName("light");
         setTextureName(String.format("%s:%s", ImperiumBlocks.MODID, "light"));
     }

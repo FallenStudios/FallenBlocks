@@ -47,19 +47,17 @@ public class IMPDoor extends BlockDoor {
     @SideOnly(Side.CLIENT)
     private IIcon[] lower;
 
+    public String name;
+
     public IMPDoor(ImperiumBlocks Core, String blockName, Properties blockProps) {
         super(Helper.getMaterial(blockProps.getProperty("material", "rock")));
 
         this.Core = Core;
-
-        float f = 0.5F;
-        float f1 = 1.0F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f1, 0.5F + f);
+        this.name = blockName.replaceFirst("Door", "");
 
         this.setBlockName(blockName);
         this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
         this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
-        this.setLightLevel(Float.valueOf(blockProps.getProperty("light", "0.0F")));
     }
 
     @Override
@@ -70,8 +68,8 @@ public class IMPDoor extends BlockDoor {
 
         this.upper = new IIcon[2];
         this.lower = new IIcon[2];
-        this.upper[0] = iconReg.registerIcon(ImperiumBlocks.MODID + ":" + textureName + "/" + textureName + "_doorUpper");
-        this.lower[0] = iconReg.registerIcon(ImperiumBlocks.MODID + ":" + textureName + "/" + textureName + "_doorLower");
+        this.upper[0] = iconReg.registerIcon(ImperiumBlocks.MODID + ":" + name + "/" + name + "_doorUpper");
+        this.lower[0] = iconReg.registerIcon(ImperiumBlocks.MODID + ":" + name + "/" + name + "_doorLower");
         this.upper[1] = new IconFlipped(this.upper[0], true, false);
         this.lower[1] = new IconFlipped(this.lower[0], true, false);
     }

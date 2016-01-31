@@ -32,8 +32,6 @@ import java.util.Properties;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
-import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -52,17 +50,20 @@ public class IMPFence extends BlockFence {
 	
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIcon;
+
+    public String name;
 	
 	public IMPFence(ImperiumBlocks Core, String blockName, Properties blockProps) {		
         super(blockName, Helper.getMaterial(blockProps.getProperty("material", "rock")));
 
         this.Core = Core;
+        this.name = blockName.replaceFirst("Fence", "");
         
         this.setBlockName(blockName);
         this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
         this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
         this.setLightLevel(Float.valueOf(blockProps.getProperty("light", "0.0F")));
-		this.setCreativeTab(ImperiumBlocks.impTab);
+		this.setCreativeTab(ImperiumBlocks.fenceTab);
 	}
 
 	@SideOnly(Side.CLIENT)
