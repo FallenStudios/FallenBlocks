@@ -43,42 +43,35 @@ public class Utils {
 		if(dirURL != null && dirURL.getProtocol().equals("file")) return new File(dirURL.toURI()).list();
 		if(dirURL == null) {
 			String me = this.getClass().getName().replace(".", "/") +".class";
-	        dirURL = this.getClass().getClassLoader().getResource(me);
+			dirURL = this.getClass().getClassLoader().getResource(me);
 		}
 
 		if(dirURL.getProtocol().equals("jar")) {
 			String jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!"));
-	        JarFile jar = new JarFile(URLDecoder.decode(jarPath, "UTF-8"));
-	        Enumeration<JarEntry> entries = jar.entries();
-	        Set<String> result = new HashSet<String>();
+			JarFile jar = new JarFile(URLDecoder.decode(jarPath, "UTF-8"));
+			Enumeration<JarEntry> entries = jar.entries();
+			Set<String> result = new HashSet<String>();
 	        
-	        while(entries.hasMoreElements()) {
-	        	String name = entries.nextElement().getName();
+			while(entries.hasMoreElements()) {
+				String name = entries.nextElement().getName();
 
-	          	if(name.startsWith(path)) {
-	            	String entry = name.substring(path.length());
+				if(name.startsWith(path)) {
+					String entry = name.substring(path.length());
 
-					if(entry.length() == 0)
-						continue;
-					ImperiumBlocks.log.info("1 " + entry);
-					if(entry.charAt(0) == '/')
-						entry = entry.substring(1);
-					if(entry.length() == 0)
-						continue;
-					ImperiumBlocks.log.info("2 " + entry);
+					if(entry.length() == 0) continue;
+					if(entry.charAt(0) == '/') entry = entry.substring(1);
+					if(entry.length() == 0) continue;
 
-	            	int checkSubdir = entry.indexOf("/");
-	            
-	            	if(checkSubdir >= 0) entry = entry.substring(0, checkSubdir);
-
-					if(entry.length() != 0)
-	            		result.add(entry);
-	          	}
-	        }
+					int checkSubdir = entry.indexOf("/");
+	
+					if(checkSubdir >= 0) entry = entry.substring(0, checkSubdir);
+					if(entry.length() != 0)result.add(entry);
+				}
+			}
 	        
-	        jar.close();
+			jar.close();
 	        
-	        return result.toArray(new String[result.size()]);
+			return result.toArray(new String[result.size()]);
 		} 
 	        
 		throw new UnsupportedOperationException("Cannot list files for URL "+ dirURL);
