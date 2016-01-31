@@ -9,9 +9,6 @@ eclipse/
 .gradle/
 gradle/
 *.txt
-*.bat
-*.gradle
-gradlew
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
