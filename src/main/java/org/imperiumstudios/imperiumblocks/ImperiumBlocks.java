@@ -64,17 +64,11 @@ import java.util.zip.ZipOutputStream;
 
 import javax.swing.JOptionPane;
 
+import org.imperiumstudios.imperiumblocks.Special.DoorItem;
 import org.imperiumstudios.imperiumblocks.Special.Light;
 import org.imperiumstudios.imperiumblocks.Special.LightItem;
 import org.imperiumstudios.imperiumblocks.Special.LightRemoveItem;
-import org.imperiumstudios.imperiumblocks.models.IMPBlock;
-import org.imperiumstudios.imperiumblocks.models.IMPFence;
-import org.imperiumstudios.imperiumblocks.models.IMPGate;
-import org.imperiumstudios.imperiumblocks.models.IMPGlass;
-import org.imperiumstudios.imperiumblocks.models.IMPSlab;
-import org.imperiumstudios.imperiumblocks.models.IMPStair;
-import org.imperiumstudios.imperiumblocks.models.IMPTrapdoor;
-import org.imperiumstudios.imperiumblocks.models.IMPWall;
+import org.imperiumstudios.imperiumblocks.models.*;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -122,14 +116,18 @@ public class ImperiumBlocks {
 				for(String blockType: blockTypes) {
 					Block block = null;
 					
-					if(blockType.equalsIgnoreCase("block")) block = new IMPBlock(this, blockFile.replace(".properties", "") +"Block", blockProps);
-					else if(blockType.equalsIgnoreCase("wall")) block = new IMPWall(this, blockFile.replace(".properties", "") +"Wall", blockProps);
-					else if(blockType.equalsIgnoreCase("glass")) block = new IMPGlass(this, blockFile.replace(".properties", "") +"Glass", blockProps);
-					else if(blockType.equalsIgnoreCase("fence")) block = new IMPFence(this, blockFile.replace(".properties", "") +"Fence", blockProps);
-					else if(blockType.equalsIgnoreCase("gate")) block = new IMPGate(this, blockFile.replace(".properties", "") +"Gate", blockProps);
-					else if(blockType.equalsIgnoreCase("slab")) block = new IMPSlab(this, blockFile.replace(".properties", "") +"Slab", blockProps);
-					else if(blockType.equalsIgnoreCase("stair")) block = new IMPStair(this, blockFile.replace(".properties", "") +"Stair", blockProps);
-					else if(blockType.equalsIgnoreCase("trapdoor")) block = new IMPTrapdoor(this, blockFile.replace(".properties", "") +"Trapdoor", blockProps);
+					if(blockType.equalsIgnoreCase("block")) block = new IMPBlock(this, blockFile.replace(".properties", "") + "Block", blockProps);
+					else if(blockType.equalsIgnoreCase("wall")) block = new IMPWall(this, blockFile.replace(".properties", "") + "Wall", blockProps);
+					else if(blockType.equalsIgnoreCase("glass")) block = new IMPGlass(this, blockFile.replace(".properties", "") + "Glass", blockProps);
+					else if(blockType.equalsIgnoreCase("fence")) block = new IMPFence(this, blockFile.replace(".properties", "") + "Fence", blockProps);
+					else if(blockType.equalsIgnoreCase("gate")) block = new IMPGate(this, blockFile.replace(".properties", "") + "Gate", blockProps);
+					else if(blockType.equalsIgnoreCase("slab")) block = new IMPSlab(this, blockFile.replace(".properties", "") + "Slab", blockProps);
+					else if(blockType.equalsIgnoreCase("stair")) block = new IMPStair(this, blockFile.replace(".properties", "") + "Stair", blockProps);
+					else if(blockType.equalsIgnoreCase("trapdoor")) block = new IMPTrapdoor(this, blockFile.replace(".properties", "") + "Trapdoor", blockProps);
+                    else if(blockType.equalsIgnoreCase("door")) {
+                        block = new IMPDoor(this, blockFile.replace(".properties", "") + "Door", blockProps);
+                        GameRegistry.registerItem(new DoorItem((IMPDoor) block), blockFile.replace(".properties", "") + "DoorItem");
+                    }
 					else continue;
 					
 					GameRegistry.registerBlock(block, block.getUnlocalizedName().substring(5));
