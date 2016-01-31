@@ -26,39 +26,18 @@
 
 package org.imperiumstudios.imperiumblocks.models;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
-import java.util.Random;
-import java.util.Set;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 import org.imperiumstudios.imperiumblocks.Helper;
 import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import scala.actors.threadpool.Arrays;
 
 public class IMPBlock extends Block {
 
@@ -90,9 +69,13 @@ public class IMPBlock extends Block {
 		try {
 
 			textureName = this.getUnlocalizedName().substring(5).replace("Block", "");
+			ImperiumBlocks.log.info(textureName);
 			
 			List textures = new ArrayList();
-			for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/"+ textureName)) textures.add(item);
+			for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/"+ textureName)) {
+				textures.add(item);
+				ImperiumBlocks.log.info(item);
+			}
 
 			if(textures.contains(textureName +".png")) {
 				blockIconBottom = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);

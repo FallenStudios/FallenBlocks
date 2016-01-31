@@ -26,17 +26,9 @@
 
 package org.imperiumstudios.imperiumblocks.models;
 
-import java.io.File;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 import org.imperiumstudios.imperiumblocks.Helper;
 import org.imperiumstudios.imperiumblocks.ImperiumBlocks;

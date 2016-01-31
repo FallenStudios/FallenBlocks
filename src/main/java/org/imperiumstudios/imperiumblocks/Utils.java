@@ -53,16 +53,27 @@ public class Utils {
 	        Set<String> result = new HashSet<String>();
 	        
 	        while(entries.hasMoreElements()) {
-	          String name = entries.nextElement().getName();
-	          
-	          if(name.startsWith(path)) {
-	            String entry = name.substring(path.length());
-	            int checkSubdir = entry.indexOf("/");
+	        	String name = entries.nextElement().getName();
+
+	          	if(name.startsWith(path)) {
+	            	String entry = name.substring(path.length());
+
+					if(entry.length() == 0)
+						continue;
+					ImperiumBlocks.log.info("1 " + entry);
+					if(entry.charAt(0) == '/')
+						entry = entry.substring(1);
+					if(entry.length() == 0)
+						continue;
+					ImperiumBlocks.log.info("2 " + entry);
+
+	            	int checkSubdir = entry.indexOf("/");
 	            
-	            if(checkSubdir >= 0) entry = entry.substring(0, checkSubdir);
-	            
-	            result.add(entry);
-	          }
+	            	if(checkSubdir >= 0) entry = entry.substring(0, checkSubdir);
+
+					if(entry.length() != 0)
+	            		result.add(entry);
+	          	}
 	        }
 	        
 	        jar.close();

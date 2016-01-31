@@ -27,34 +27,36 @@
 package org.imperiumstudios.imperiumblocks;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 
-import java.lang.reflect.Field;
-
 public class Helper {
-	
     public static Material getMaterial(String s) {
-    	Class<Material> materialClass = Material.class;
-    	for(Field field: materialClass.getDeclaredFields()) {
-            if(field.getName().equals(s)) {
-                try { return (Material) field.get(new Material(MapColor.stoneColor)); } 
-            	catch(IllegalAccessException ex) { ex.printStackTrace(); }
-            }
+        String materialS[]  = {"air", "grass", "ground", "wood", "rock", "iron", "anvil", "water", "lava", "leaves", "plants", "vine", "sponge", "cloth",
+                "fire", "sand", "circuits", "carpet", "glass", "redstoneLight", "tnt", "coral", "ice", "packedIce", "snow", "craftedSnow", "cactus",
+                "clay", "gourd", "dragonEgg", "portal", "cake", "web", "piston"};
+
+        Material material[] = {Material.air, Material.grass, Material.ground, Material.wood, Material.rock, Material.iron, Material.anvil, Material.water,
+                Material.lava, Material.leaves, Material.plants, Material.vine, Material.sponge, Material.cloth, Material.fire, Material.sand,
+                Material.circuits, Material.carpet, Material.glass, Material.redstoneLight, Material.tnt, Material.coral, Material.ice, Material.packedIce,
+                Material.snow, Material.craftedSnow, Material.cactus, Material.clay, Material.gourd, Material.dragonEgg, Material.portal, Material.cake,
+                Material.web, Material.piston};
+
+    	for(int i = 0; i < Math.min(materialS.length, material.length); i++) {
+            if (materialS[i].equalsIgnoreCase(s))
+                return material[i];
         }
 
         return Material.rock;
     }
 
     public static Block.SoundType getSoundType(String s) {
-    	s = s.replace("\"","");
-    	
-        Class<Block> blockClass = Block.class;
-        for(Field field : blockClass.getDeclaredFields()) {
-            if(field.getName().equals(s)) {
-                try { return (Block.SoundType) field.get(new Block.SoundType("none", 0.0F, 0.0F)); } 
-                catch(IllegalAccessException ex) { ex.printStackTrace(); }
-            }
+        String soundS[]  = {"stone", "wood", "gravel", "grass", "piston", "metal", "glass", "cloth", "sand", "snow", "ladder"};
+        Block.SoundType sound[] = {Block.soundTypeStone, Block.soundTypeWood, Block.soundTypeGravel, Block.soundTypeGrass, Block.soundTypePiston,
+                Block.soundTypeMetal, Block.soundTypeGlass, Block.soundTypeCloth, Block.soundTypeSand, Block.soundTypeSnow, Block.soundTypeLadder};
+
+        for(int i = 0; i < Math.min(soundS.length, sound.length); i++) {
+            if (soundS[i].equalsIgnoreCase(s))
+                return sound[i];
         }
 
         return Block.soundTypeStone;

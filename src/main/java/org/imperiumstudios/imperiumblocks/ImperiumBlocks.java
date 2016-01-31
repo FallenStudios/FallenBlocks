@@ -64,6 +64,9 @@ import java.util.zip.ZipOutputStream;
 
 import javax.swing.JOptionPane;
 
+import org.imperiumstudios.imperiumblocks.Special.Light;
+import org.imperiumstudios.imperiumblocks.Special.LightItem;
+import org.imperiumstudios.imperiumblocks.Special.LightRemoveItem;
 import org.imperiumstudios.imperiumblocks.models.IMPBlock;
 import org.imperiumstudios.imperiumblocks.models.IMPFence;
 import org.imperiumstudios.imperiumblocks.models.IMPGate;
@@ -93,6 +96,8 @@ public class ImperiumBlocks {
     public static CreativeTabs impTab = new CreativeTabsIMP("ImperiumBlocks");
     
     public static org.apache.logging.log4j.Logger log;
+
+	public static Light light;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) throws IOException {
@@ -135,23 +140,22 @@ public class ImperiumBlocks {
 			} else throw new FileNotFoundException("property file '" + blockFile + "' not found in the classpath");
 
 		}
-        
-        /*
+
         light = new Light();
         GameRegistry.registerBlock(light, "light");
 
-        lightOn = new LightItem();
-        lightOff = new LightRemoveItem();
+        //lightOn = new LightItem();
+        LightRemoveItem lightOff = new LightRemoveItem();
+		LightItem lightOn = new LightItem();
 
         GameRegistry.registerItem(lightOn, "lightOn");
         GameRegistry.registerItem(lightOff, "lightOff");
 
         //Glowstone in the middle and the edges, Glass in the free slots
-        GameRegistry.addShapedRecipe(new ItemStack(lightOn, 2), "OgO", "gOg", "OgO", 'O', Blocks.glowstone, 'g', Blocks.glass);
+        GameRegistry.addShapedRecipe(new net.minecraft.item.ItemStack(lightOn, 2), "OgO", "gOg", "OgO", 'O', net.minecraft.init.Blocks.glowstone, 'g', net.minecraft.init.Blocks.glass);
 
         //Glowstine in the middle, sorounded by Cleanstone
-        GameRegistry.addShapedRecipe(new ItemStack(lightOff, 1), "SSS", "SOS", "SSS", 'S', Blocks.stone, 'O', Blocks.glowstone);
-   		*/
+        GameRegistry.addShapedRecipe(new net.minecraft.item.ItemStack(lightOff, 1), "SSS", "SOS", "SSS", 'S', net.minecraft.init.Blocks.stone, 'O', net.minecraft.init.Blocks.glowstone);
 	}
 	
     public void copy(InputStream input, OutputStream output) throws IOException {
@@ -170,25 +174,26 @@ public class ImperiumBlocks {
 
 		Scanner scan = new Scanner(rbc);
 		String v1 = scan.nextLine();
-		
 
-		InputStream is = this.getClass().getResourceAsStream("/assets/imperiumblocks/version");
+
+		InputStream is = this.getClass().getResourceAsStream("/assets/impblock/version");
 		scan = new Scanner(is);
 		String v2 = scan.nextLine();
 
 		if(v1.equals(v2) || v1.equals("0")) {
-			this.log.info(String.format("Client is up-to-secound; Version is %s and could %s", v2, v1));
+			log.info(String.format("Client is up-to-secound; Version is %s and could %s", v2, v1));
 			return;
 		}
 
-		this.log.info(String.format("Running Client update; Version is %s and could %s", v2, v1));
-		
+		log.info(String.format("Running Client update; Version is %s and could %s", v2, v1));
 		String jvm_location;
-		
-		if(System.getProperty("os.name").startsWith("Win")) jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java.exe";
-	    else jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+		if (System.getProperty("os.name").startsWith("Win")) {
+			jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java.exe";
+		} else {
+			jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+		}
 
-		Runtime.getRuntime().exec(new String[] {jvm_location, "-jar", Minecraft.getMinecraft().mcDataDir + File.separator + "AssetsLoader.jar", Minecraft.getMinecraft().mcDataDir.getPath(), "http://blocks.imperium1871.de/assets.zip", "ImperiumBlocks", "imperiumblocks", v1, String.valueOf(true)});
+		Runtime.getRuntime().exec(new String[] {jvm_location, "-jar", Minecraft.getMinecraft().mcDataDir + File.separator + "AssetsLoader.jar", Minecraft.getMinecraft().mcDataDir.getPath(), "http://blocks.imperium1871.de/assets.zip", "ImperiumBlocks", MODID.toLowerCase(), v1, String.valueOf(true)});
 		new FMLCommonHandler().exitJava(0, false);
 	}
 }

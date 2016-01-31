@@ -3,4 +3,8 @@ tile.kupferdach.name=Kupferdach
 tile.sandstein.name=Sandstein
 tile.stahltraeger.name=Stahltraeger
 
+tile.light.name=Ugly Light
+item.light.name=Block of Lightning
+item.light_off.name=Block of Darkness
+
 itemGroup.ImperiumBlocks=ImperiumBlocks
