@@ -29,10 +29,8 @@ package org.imperiumstudios.imperiumblocks.models;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockDoor;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.IconFlipped;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -42,6 +40,7 @@ import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 import org.imperiumstudios.imperiumblocks.Special.DoorItem;
 
 import java.util.Properties;
+import java.util.Random;
 
 
 public class IMPDoor extends BlockDoor {
@@ -63,8 +62,10 @@ public class IMPDoor extends BlockDoor {
         this.name = blockName.replaceFirst("Door", "");
 
         this.setBlockName(blockName);
-        this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
+        this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "stone")));
         this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
+        if(Float.valueOf(blockProps.getProperty("blast", "-1")) != -1)
+            setResistance(Float.valueOf(blockProps.getProperty("blast", "-1")));
     }
 
     @Override
@@ -160,6 +161,10 @@ public class IMPDoor extends BlockDoor {
     @SideOnly(Side.CLIENT)
     public Item getItem(World world, int x, int y, int z) {
         return item;
+    }
+
+    public Item getItemDropped(int p_149650_1_, Random rand, int p_149650_3_) {
+        return (p_149650_1_ & 8) != 0 ? null : item;
     }
 
 }

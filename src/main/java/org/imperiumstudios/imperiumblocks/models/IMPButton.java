@@ -19,9 +19,10 @@ public class IMPButton extends BlockButton {
         super(Boolean.valueOf(blockProps.getProperty("buttonWooden", "false")));
         this.setCreativeTab(ImperiumBlocks.miscTab);
         this.setBlockName(blockName);
-        this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
+        this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "stone")));
         this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
-        this.setLightLevel(Float.valueOf(blockProps.getProperty("light", "0.0F")));
+        if(Float.valueOf(blockProps.getProperty("blast", "-1")) != -1)
+            setResistance(Float.valueOf(blockProps.getProperty("blast", "-1")));
 
         this.Core = Core;
     }

@@ -135,6 +135,7 @@ public class ImperiumBlocks {
                         ((IMPDoor) block).setDoorItem((DoorItem) item);
                     } else if(blockType.equalsIgnoreCase("PressurePlate")) block = new IMPPressurePlate(name + "PressurePlate", blockProps);
                     else if(blockType.equalsIgnoreCase("Button")) block = new IMPButton(this, name + "Button", blockProps);
+                    else if(blockType.equalsIgnoreCase("Pane")) block = new IMPPane(name + "Pane", blockProps);
 					else continue;
 					
 					GameRegistry.registerBlock(block, block.getUnlocalizedName().substring(5));

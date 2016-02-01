@@ -57,10 +57,11 @@ public class IMPFence extends BlockFence {
         this.Core = Core;
         
         this.setBlockName(blockName);
-        this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
+        this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "wood")));
         this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
-        this.setLightLevel(Float.valueOf(blockProps.getProperty("light", "0.0F")));
 		this.setCreativeTab(ImperiumBlocks.fenceTab);
+		if(Float.valueOf(blockProps.getProperty("blast", "-1")) != -1)
+			setResistance(Float.valueOf(blockProps.getProperty("blast", "-1")));
 	}
 
 	@SideOnly(Side.CLIENT)
