@@ -49,7 +49,6 @@ import net.minecraft.world.World;
 public class IMPWall extends BlockWall {
 
 	ImperiumBlocks Core;
-	public String name;
 	
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIcon;
@@ -58,7 +57,6 @@ public class IMPWall extends BlockWall {
         super(Blocks.sandstone);
 
         this.Core = Core;
-		this.name = blockName.replaceFirst("Wall", "");
         
         this.setBlockName(blockName);
         this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
@@ -77,7 +75,7 @@ public class IMPWall extends BlockWall {
 	@Override
 	public void registerBlockIcons(IIconRegister p_149651_1_) {
 		try {
-			textureName = name;
+			textureName = this.getUnlocalizedName().substring(5).replace("Wall", "");
 			
 			List textures = new ArrayList();
 			for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/"+ textureName)) textures.add(item);

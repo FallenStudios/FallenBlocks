@@ -40,22 +40,26 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 
 public class IMPGlass extends BlockGlass {
-	@SideOnly(Side.CLIENT)
-	protected IIcon blockIconBottom;
-	protected IIcon blockIconEast;
-	protected IIcon blockIconNord;
-	protected IIcon blockIconSouth;
-	protected IIcon blockIconTop;
-	protected IIcon blockIconWest;
 	
 	ImperiumBlocks Core;
-	public String name;
+	
+	@SideOnly(Side.CLIENT)
+	protected IIcon blockIconBottom;
+	@SideOnly(Side.CLIENT)
+	protected IIcon blockIconEast;
+	@SideOnly(Side.CLIENT)
+	protected IIcon blockIconNord;
+	@SideOnly(Side.CLIENT)
+	protected IIcon blockIconSouth;
+	@SideOnly(Side.CLIENT)
+	protected IIcon blockIconTop;
+	@SideOnly(Side.CLIENT)
+	protected IIcon blockIconWest;
 
 	public IMPGlass(ImperiumBlocks Core, String blockName, Properties blockProps) {		
         super(Helper.getMaterial(blockProps.getProperty("material", "glass")), false);
 
         this.Core = Core;
-		this.name = blockName.replaceFirst("Glass", "");
         
         this.setBlockName(blockName);
         this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
@@ -68,7 +72,7 @@ public class IMPGlass extends BlockGlass {
 	@Override
 	public void registerBlockIcons(IIconRegister p_149651_1_) {
 		try {
-			textureName = name;
+			textureName = this.getUnlocalizedName().substring(5).replace("Glass", "");
 			
 			List textures = new ArrayList();
 			for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/"+ textureName)) textures.add(item);

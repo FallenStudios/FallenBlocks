@@ -50,14 +50,11 @@ public class IMPFence extends BlockFence {
 	
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIcon;
-
-    public String name;
 	
 	public IMPFence(ImperiumBlocks Core, String blockName, Properties blockProps) {		
         super(blockName, Helper.getMaterial(blockProps.getProperty("material", "rock")));
 
         this.Core = Core;
-        this.name = blockName.replaceFirst("Fence", "");
         
         this.setBlockName(blockName);
         this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));

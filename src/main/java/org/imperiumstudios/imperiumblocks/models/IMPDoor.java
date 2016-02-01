@@ -1,17 +1,3 @@
-package org.imperiumstudios.imperiumblocks.models;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.BlockDoor;
-import net.minecraft.client.renderer.IconFlipped;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-import org.imperiumstudios.imperiumblocks.Helper;
-import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
-
-import java.util.Properties;
-
 /**
  * The MIT License (MIT)
  *
@@ -37,6 +23,21 @@ import java.util.Properties;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
+package org.imperiumstudios.imperiumblocks.models;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.client.renderer.IconFlipped;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
+import org.imperiumstudios.imperiumblocks.Helper;
+import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
+
+import java.util.Properties;
+
 
 public class IMPDoor extends BlockDoor {
 
@@ -68,8 +69,8 @@ public class IMPDoor extends BlockDoor {
 
         this.upper = new IIcon[2];
         this.lower = new IIcon[2];
-        this.upper[0] = iconReg.registerIcon(ImperiumBlocks.MODID + ":" + name + "/" + name + "_doorUpper");
-        this.lower[0] = iconReg.registerIcon(ImperiumBlocks.MODID + ":" + name + "/" + name + "_doorLower");
+        this.upper[0] = iconReg.registerIcon(ImperiumBlocks.MODID + ":" + name + "/doorUpper");
+        this.lower[0] = iconReg.registerIcon(ImperiumBlocks.MODID + ":" + name + "/doorLower");
         this.upper[1] = new IconFlipped(this.upper[0], true, false);
         this.lower[1] = new IconFlipped(this.lower[0], true, false);
     }

@@ -55,14 +55,11 @@ public class IMPBlock extends Block {
 	protected IIcon blockIconTop;
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIconWest;
-    
-    public String name;
 	
 	public IMPBlock(ImperiumBlocks Core, String blockName, Properties blockProps) {		
         super(Helper.getMaterial(blockProps.getProperty("material", "rock")));
 
         this.Core = Core;
-        this.name = blockName.replaceFirst("Block", "");
         
         this.setBlockName(blockName);
         this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
@@ -75,7 +72,7 @@ public class IMPBlock extends Block {
 	@Override
 	public void registerBlockIcons(IIconRegister p_149651_1_) {
 		try {
-            textureName = name;
+            textureName = this.getUnlocalizedName().substring(5).replace("Block", "");
 			ImperiumBlocks.log.info(textureName);
 
 			List textures = new ArrayList();

@@ -45,14 +45,11 @@ public class IMPGate extends BlockFenceGate {
 	
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIcon;
-
-	public String name;
 	
 	public IMPGate(ImperiumBlocks Core, String blockName, Properties blockProps) {		
         super();
 
         this.Core = Core;
-		this.name = blockName.replaceFirst("Gate", "");
         
         this.setBlockName(blockName);
         this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
@@ -65,7 +62,7 @@ public class IMPGate extends BlockFenceGate {
 	@Override
 	public void registerBlockIcons(IIconRegister p_149651_1_) {
 		try {
-			textureName = name;
+			textureName = this.getUnlocalizedName().substring(5).replace("Gate", "");
 			
 			List textures = new ArrayList();
 			for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/"+ textureName)) textures.add(item);

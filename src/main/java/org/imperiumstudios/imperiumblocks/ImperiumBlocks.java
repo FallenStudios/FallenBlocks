@@ -115,20 +115,20 @@ public class ImperiumBlocks {
 			if(inputStream != null) {
 				blockProps.load(inputStream);
 				String[] blockTypes = blockProps.getProperty("types", "block").split(",");
-                String name = blockProps.getProperty("name", blockFile.replace(".properties", ""));
+                String name = blockFile.replace(".properties", "");
 				
 				for(String blockType: blockTypes) {
 					Block block = null;
                     Item item = null;
 					
-					if(blockType.equalsIgnoreCase("block")) block = new IMPBlock(this, name.replaceAll(" ", "") + "Block", blockProps);
-					else if(blockType.equalsIgnoreCase("wall")) block = new IMPWall(this, name.replaceAll(" ", "") + "Wall", blockProps);
-					else if(blockType.equalsIgnoreCase("glass")) block = new IMPGlass(this, name.replaceAll(" ", "") + "Glass", blockProps);
-					else if(blockType.equalsIgnoreCase("fence")) block = new IMPFence(this, name.replaceAll(" ", "") + "Fence", blockProps);
-					else if(blockType.equalsIgnoreCase("gate")) block = new IMPGate(this, name.replaceAll(" ", "") + "Gate", blockProps);
-					else if(blockType.equalsIgnoreCase("slab")) block = new IMPSlab(this, name.replaceAll(" ", "") + "Slab", blockProps);
-					else if(blockType.equalsIgnoreCase("stair")) block = new IMPStair(this, name.replaceAll(" ", "") + "Stair", blockProps);
-					else if(blockType.equalsIgnoreCase("trapdoor")) block = new IMPTrapdoor(this, name.replaceAll(" ", "") + "Trapdoor", blockProps);
+					if(blockType.equalsIgnoreCase("block")) block = new IMPBlock(this, name + "Block", blockProps);
+					else if(blockType.equalsIgnoreCase("wall")) block = new IMPWall(this, name + "Wall", blockProps);
+					else if(blockType.equalsIgnoreCase("glass")) block = new IMPGlass(this, name + "Glass", blockProps);
+					else if(blockType.equalsIgnoreCase("fence")) block = new IMPFence(this, name + "Fence", blockProps);
+					else if(blockType.equalsIgnoreCase("gate")) block = new IMPGate(this, name + "Gate", blockProps);
+					else if(blockType.equalsIgnoreCase("slab")) block = new IMPSlab(this, name + "Slab", blockProps);
+					else if(blockType.equalsIgnoreCase("stair")) block = new IMPStair(this, name + "Stair", blockProps);
+					else if(blockType.equalsIgnoreCase("trapdoor")) block = new IMPTrapdoor(this, name + "Trapdoor", blockProps);
                     else if(blockType.equalsIgnoreCase("door")) {
                         block = new IMPDoor(this, name + "Door", blockProps);
                         item = new DoorItem((IMPDoor) block);
@@ -137,7 +137,7 @@ public class ImperiumBlocks {
 					
 					GameRegistry.registerBlock(block, block.getUnlocalizedName().substring(5));
                     if(item != null)
-                        GameRegistry.registerItem(item, name + "Item");
+                        GameRegistry.registerItem(item, item.getUnlocalizedName().substring(5));
                     
                     if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("block")))
                         blockIcon = (item == null ? Item.getItemFromBlock(block) : item);

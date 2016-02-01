@@ -43,7 +43,6 @@ import net.minecraft.util.IIcon;
 public class IMPStair extends BlockStairs {
 	
 	ImperiumBlocks Core;
-	public String name;
 	
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIcon;
@@ -52,7 +51,6 @@ public class IMPStair extends BlockStairs {
         super(Blocks.sandstone, 0);
 
         this.Core = Core;
-		this.name = blockName.replaceFirst("Stair", "");
         
         this.setBlockName(blockName);
         this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "soundTypeStone")));
@@ -66,7 +64,7 @@ public class IMPStair extends BlockStairs {
 	@Override
 	public void registerBlockIcons(IIconRegister p_149651_1_) {
 		try {
-			textureName = name;
+			textureName = this.getUnlocalizedName().substring(5).replace("Stair", "");
 			
 			List textures = new ArrayList();
 			for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/"+ textureName)) textures.add(item);

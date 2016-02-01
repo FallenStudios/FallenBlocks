@@ -22,17 +22,19 @@ public class DoorItem extends ItemDoor {
 
     public DoorItem(IMPDoor door) {
         super(door.getMaterial());
-        setCreativeTab(ImperiumBlocks.miscTab);
-        setUnlocalizedName(door.getUnlocalizedName().substring(5).replaceFirst("Door", "") + "_doorItem");
+        
         this.door = door;
+        
+        this.setUnlocalizedName(door.getUnlocalizedName().substring(5) + "Item");
+        this.setCreativeTab(ImperiumBlocks.miscTab);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconReg) {
-        String textureName = door.getUnlocalizedName().substring(5).replaceFirst("Door", "");
+        String textureName = door.getUnlocalizedName().substring(5).replace("Door", "");
 
-        icon = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName + "_doorItem");
+        icon = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/doorItem");
     }
 
     @Override
