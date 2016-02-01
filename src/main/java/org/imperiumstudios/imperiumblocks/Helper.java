@@ -28,6 +28,11 @@ package org.imperiumstudios.imperiumblocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.util.IIcon;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Helper {
     public static Material getMaterial(String s) {
@@ -50,16 +55,15 @@ public class Helper {
     }
 
     public static Block.SoundType getSoundType(String s) {
-        String soundS[]  = {"stone", "wood", "gravel", "grass", "piston", "metal", "glass", "cloth", "sand", "snow", "ladder"};
+        String soundS[] = {"stone", "wood", "gravel", "grass", "piston", "metal", "glass", "cloth", "sand", "snow", "ladder"};
         Block.SoundType sound[] = {Block.soundTypeStone, Block.soundTypeWood, Block.soundTypeGravel, Block.soundTypeGrass, Block.soundTypePiston,
                 Block.soundTypeMetal, Block.soundTypeGlass, Block.soundTypeCloth, Block.soundTypeSand, Block.soundTypeSnow, Block.soundTypeLadder};
 
-        for(int i = 0; i < Math.min(soundS.length, sound.length); i++) {
+        for (int i = 0; i < Math.min(soundS.length, sound.length); i++) {
             if (soundS[i].equalsIgnoreCase(s))
                 return sound[i];
         }
 
         return Block.soundTypeStone;
     }
-    
 }

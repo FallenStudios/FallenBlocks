@@ -29,12 +29,17 @@ package org.imperiumstudios.imperiumblocks.models;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockDoor;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.IconFlipped;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import org.imperiumstudios.imperiumblocks.Helper;
 import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
+import org.imperiumstudios.imperiumblocks.Special.DoorItem;
 
 import java.util.Properties;
 
@@ -49,6 +54,7 @@ public class IMPDoor extends BlockDoor {
     private IIcon[] lower;
 
     public String name;
+    private DoorItem item;
 
     public IMPDoor(ImperiumBlocks Core, String blockName, Properties blockProps) {
         super(Helper.getMaterial(blockProps.getProperty("material", "rock")));
@@ -144,6 +150,16 @@ public class IMPDoor extends BlockDoor {
         {
             return this.lower[0];
         }
+    }
+
+    public void setDoorItem(DoorItem item) {
+        this.item = item;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public Item getItem(World world, int x, int y, int z) {
+        return item;
     }
 
 }
