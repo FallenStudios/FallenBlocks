@@ -134,6 +134,7 @@ public class ImperiumBlocks {
                         item = new DoorItem((IMPDoor) block);
                         ((IMPDoor) block).setDoorItem((DoorItem) item);
                     } else if(blockType.equalsIgnoreCase("PressurePlate")) block = new IMPPressurePlate(name + "PressurePlate", blockProps);
+                    else if(blockType.equalsIgnoreCase("Button")) block = new IMPButton(this, name + "Button", blockProps);
 					else continue;
 					
 					GameRegistry.registerBlock(block, block.getUnlocalizedName().substring(5));
@@ -189,14 +190,9 @@ public class ImperiumBlocks {
             wallIcon = lightOn;
         if(miscIcon == null)
             miscIcon = lightOn;
-
-        System.out.printf("%s %s %s %s %s %s", blockIcon.getUnlocalizedName(), stairIcon.getUnlocalizedName(), slabIcon.getUnlocalizedName(), fenceIcon.getUnlocalizedName(),
-                wallIcon.getUnlocalizedName(), miscIcon.getUnlocalizedName());
 	}
     
 	public void patchJar() throws IOException {
-		FileSystem fs = FileSystems.getDefault();
-
 		URL website = new URL("http://blocks.imperium1871.de/version");
 		ReadableByteChannel rbc = Channels.newChannel(website.openStream());
 
