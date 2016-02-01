@@ -83,8 +83,7 @@ public class ImperiumBlocks {
 	public static final String NAME = "Imperium Blocks"; //Used in the GUI parts of the mod
 	public static final String MODID = "imperiumblocks";
 	public static final String VERSION = "1.0";
-    
-	private String modJar;
+
 	public static Light light;
 
 	public static org.apache.logging.log4j.Logger log;
@@ -92,9 +91,7 @@ public class ImperiumBlocks {
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e) throws IOException {
 		log = e.getModLog();
-		modJar = Minecraft.getMinecraft().mcDataDir + File.separator +"mods"+ File.separator +"ImperiumBlocks-"+ VERSION +".jar";
-
-		//patchJar();
+		patchJar();
 	}
     
 	@Mod.EventHandler
@@ -219,7 +216,7 @@ public class ImperiumBlocks {
 		if(System.getProperty("os.name").startsWith("Win")) jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java.exe";
 		else jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java";
 
-		Runtime.getRuntime().exec(new String[] {jvm_location, "-jar", Minecraft.getMinecraft().mcDataDir + File.separator + "AssetsLoader.jar", Minecraft.getMinecraft().mcDataDir.getPath(), "http://blocks.imperium1871.de/assets.zip", "ImperiumBlocks", MODID.toLowerCase(), v1, String.valueOf(true)});
+		Runtime.getRuntime().exec(new String[] {jvm_location, "-jar", Minecraft.getMinecraft().mcDataDir + File.separator + "AssetsLoader.jar", Minecraft.getMinecraft().mcDataDir.getPath(), "http://blocks.imperium1871.de/assets.zip", "ImperiumBlocks-" + VERSION, MODID.toLowerCase(), v1, String.valueOf(true)});
 		
 		new FMLCommonHandler().exitJava(0, false);
 	}
