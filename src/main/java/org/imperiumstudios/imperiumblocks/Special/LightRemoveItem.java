@@ -18,7 +18,12 @@ public class LightRemoveItem extends Item {
     //Right-Click will remove all Light Blocks in a 7x7x7 square.
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer ply, World world, int x, int y, int z, int side, float bx, float by, float bz) {
+        onItemRightClick(stack, world, ply);
+        return true;
+    }
 
+    @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer ply) {
         double px = ply.posX;
         double py = ply.posY;
         double pz = ply.posZ;
@@ -37,6 +42,6 @@ public class LightRemoveItem extends Item {
         if(!ply.capabilities.isCreativeMode && removed)
             stack.stackSize--;
 
-        return true;
+        return stack;
     }
 }

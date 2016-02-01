@@ -2,6 +2,7 @@ package org.imperiumstudios.imperiumblocks.Special;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -41,6 +42,9 @@ public class LightItem extends Item {
                 x++;
                 break;
         }
+
+        if(world.getBlock(x, y, z) != Blocks.air)
+            return false;
 
         world.setBlock(x, y, z, ImperiumBlocks.light);
 
