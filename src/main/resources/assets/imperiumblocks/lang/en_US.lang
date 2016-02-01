@@ -1,10 +1,52 @@
-tile.blockTest.name=Test Block
-tile.kupferdach.name=Kupferdach
-tile.sandstein.name=Sandstein
-tile.stahltraeger.name=Stahltraeger
+tile.blockTestBlock.name=Test Block
+tile.kupferdachBlock.name=Copper Block
+tile.sandsteinBlock.name=Sandstone
+tile.stahltraegerGlass.name=Iron Support
+tile.devBlock.name=Developer Block
+
+tile.kupferdachStair.name=Copper Stair
+tile.sandsteinStair.name=Sandstone Stair
+tile.devStair.name=Developer Stair
+
+tile.sandsteinSlab.name=Sandstone Slab
+tile.kupferdachSlab.name=Copper Slab
+tile.devSlab.name=Developer Slab
+
+tile.kupferdachGate.name=Copper Fence Gate
+tile.sandsteinGate.name=Sandstone Fence Gate
+tile.devGate.name=Developer Fence Gate
+
+tile.kupferdachFence.name=Copper Fence
+tile.sandsteinFence.name=Sandstone Fence
+tile.devFence.name=Developer Fence
+
+tile.sandsteinWall.name=Sandstone Wall
+tile.stahltraegerWall.name=Iron Support Wall
+tile.kupferdachWall.name=Copper Wall
+tile.devWall.name=Developer Wall
+
+tile.sandsteinTrapdoor.name=Sandstone Trapdoor
+tile.sweetHomePressurePlate.name=Creeper Pressure Plate
+tile.kupferdachButton.name=Copper Button
+tile.stahltraegerPane.name=Iron Support Pane
+tile.devPane.name=Developer Pane
+tile.devTrapdoor.name=Developer Trapdoor
+tile.devButton.name=Developer Button
+tile.devPressurePlate.name=Developer Pressure Plate
+tile.devDoor.name=Developer Door
+item.devDoorItem.name=Developer Door
+tile.kupferdachDoor.name=Copper Door
+item.kupferdachDoorItem.name=Copper Door
+tile.sweetHomeDoor.name=Bed Door
+item.sweetHomeDoorItem.name=Bed Door
 
 tile.light.name=Ugly Light
 item.light.name=Block of Lightning
 item.light_off.name=Block of Darkness
 
-itemGroup.ImperiumBlocks=ImperiumBlocks
+itemGroup.ImperiumBlocks=Imperium Blocks
+itemGroup.ImperiumFences=Imperium Fences
+itemGroup.ImperiumMisc=Other Imperium Stuff
+itemGroup.ImperiumSlabs=Imperium Half Slabs
+itemGroup.ImperiumStairs=Imperium Stairs
+itemGroup.ImperiumWalls=Imperium Walls

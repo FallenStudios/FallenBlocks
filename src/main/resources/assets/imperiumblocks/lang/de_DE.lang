@@ -1,0 +1,52 @@
+tile.blockTestBlock.name=Testblock
+tile.kupferdachBlock.name=Kupferblock
+tile.sandsteinBlock.name=Sandstein
+tile.stahltraegerGlass.name=Stahlbalken
+tile.devBlock.name=Entwicklerblock
+
+tile.kupferdachStair.name=Kupfertreppe
+tile.sandsteinStair.name=Sandsteintreppe
+tile.devStair.name=Entwicklertreppe
+
+tile.sandsteinSlab.name=Sandsteinhalbstuffe
+tile.kupferdachSlab.name=Kupferhalbstuffe
+tile.devSlab.name=Entwicklerhalbstuffe
+
+tile.kupferdachGate.name=Kupferzaunstor
+tile.sandsteinGate.name=Sandsteinzaunstor
+tile.devGate.name=Entwicklerzaunstor
+
+tile.kupferdachFence.name=Kupferzaun
+tile.sandsteinFence.name=Sandsteinzaun
+tile.devFence.name=Entwicklerzaun
+
+tile.sandsteinWall.name=Sandsteinmauer
+tile.stahltraegerWall.name=Stahlbalkenmauer
+tile.kupferdachWall.name=Kupfermauer
+tile.devWall.name=Entwicklermauer
+
+tile.sandsteinTrapdoor.name=Sandsteinfalltür
+tile.sweetHomePressurePlate.name=Creeperdruckplatte
+tile.kupferdachButton.name=Kupferknopf
+tile.stahltraegerPane.name=Stahlbalkenscheibe
+tile.devPane.name=Entwicklerscheibe
+tile.devTrapdoor.name=Entwicklerfalltür
+tile.devButton.name=Entwicklerknopf
+tile.devPressurePlate.name=Entwicklerdruckplatte
+tile.devDoor.name=Entwicklertür
+item.devDoorItem.name=Entwicklertür
+tile.kupferdachDoor.name=Kupfertür
+item.kupferdachDoorItem.name=Kupfertür
+tile.sweetHomeDoor.name=Bettür
+item.sweetHomeDoorItem.name=Bettür
+
+tile.light.name=Schäbiches Licht
+item.light.name=Pfad der Erleuchtung
+item.light_off.name=Pfad der Dunkelheit
+
+itemGroup.ImperiumBlocks=Imperium Blöcke
+itemGroup.ImperiumFences=Imperium Zäune
+itemGroup.ImperiumMisc=Anderes von Imperium
+itemGroup.ImperiumSlabs=Imperium Halbstuffen
+itemGroup.ImperiumStairs=Imperium Treppen
+itemGroup.ImperiumWalls=Imperium Mauern
