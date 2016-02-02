@@ -1,9 +1,9 @@
-/**
+/*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 Imperium Studios <https://imperiumstudios.org>
- * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  * Copyright (c) 2016 garantiertnicht <>
+ * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.imperiumstudios.imperiumblocks.Helper;
+import net.minecraft.item.Item;
+import org.imperiumstudios.imperiumblocks.BlockHelper;
 import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 
 import cpw.mods.fml.relauncher.Side;
@@ -40,44 +41,70 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 
-public class IMPStair extends BlockStairs {
+public class IMPStair extends BlockStairs implements IMPGenericBlock {
 	
-	ImperiumBlocks Core;
-	
-	@SideOnly(Side.CLIENT)
-	protected IIcon blockIcon;
-	
-	public IMPStair(ImperiumBlocks Core, String blockName, Properties blockProps) {		
-        super(Blocks.sandstone, 0);
+	private BlockHelper helper;
 
-        this.Core = Core;
-        
-        this.setBlockName(blockName);
-        this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "stone")));
-        this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
+	@SideOnly(Side.CLIENT)
+	protected IIcon blockIconBottom;
+	@SideOnly(Side.CLIENT)
+	protected IIcon blockIconEast;
+	@SideOnly(Side.CLIENT)
+	protected IIcon blockIconNord;
+	@SideOnly(Side.CLIENT)
+	protected IIcon blockIconSouth;
+	@SideOnly(Side.CLIENT)
+	protected IIcon blockIconTop;
+	@SideOnly(Side.CLIENT)
+	protected IIcon blockIconWest;
+	
+	public IMPStair(Properties blockProps, BlockHelper helper) {
+        super(Blocks.sandstone, 0);
+        this.helper = helper;
 		this.setCreativeTab(ImperiumBlocks.stairTab);
 		this.useNeighborBrightness = true;
-		if(Float.valueOf(blockProps.getProperty("blast", "-1")) != -1)
-			setResistance(Float.valueOf(blockProps.getProperty("blast", "-1")));
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerBlockIcons(IIconRegister p_149651_1_) {
+	public void registerBlockIcons(IIconRegister iconReg) {
 		try {
-			textureName = this.getUnlocalizedName().substring(5).replace("Stair", "");
-			
-			List textures = new ArrayList();
-			for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/"+ textureName)) textures.add(item);
+			IIcon icons[] = helper.registerIcons(iconReg, "bottom", "east", "north", "south", "top", "west");
 
-			if(textures.contains(textureName +".png")) blockIcon = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
-		} catch(Exception ex) { ex.printStackTrace(); }
+			blockIconBottom = icons[0];
+			blockIconEast =   icons[1];
+			blockIconNord =   icons[2];
+			blockIconSouth =  icons[3];
+			blockIconTop =    icons[3];
+			blockIconWest =   icons[5];
+		} catch (BlockHelper.NoSuchTexture exc) {
+			ImperiumBlocks.log.warn(exc.getMessage());
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int side, int metadata) {
-	    return blockIcon;
+		switch(side) {
+			case 0:
+				return blockIconBottom;
+			case 1:
+				return blockIconTop;
+			case 2:
+				return blockIconNord;
+			case 3:
+				return blockIconWest;
+			case 4:
+				return blockIconSouth;
+			case 5:
+				return blockIconEast;
+		}
+
+		throw new IllegalArgumentException("Illegal side: "+ side);
 	}
 
+	@Override
+	public Item getItem() {
+		return null;
+	}
 }

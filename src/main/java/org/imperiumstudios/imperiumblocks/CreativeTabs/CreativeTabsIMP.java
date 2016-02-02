@@ -1,9 +1,9 @@
-/**
+/*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 Imperium Studios <https://imperiumstudios.org>
- * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  * Copyright (c) 2016 garantiertnicht <>
+ * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

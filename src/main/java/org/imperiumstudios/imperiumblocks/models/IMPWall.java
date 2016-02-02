@@ -1,9 +1,9 @@
-/**
+/*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 Imperium Studios <https://imperiumstudios.org>
- * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  * Copyright (c) 2016 garantiertnicht <>
+ * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,11 +26,10 @@
 
 package org.imperiumstudios.imperiumblocks.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.imperiumstudios.imperiumblocks.Helper;
+import org.imperiumstudios.imperiumblocks.BlockHelper;
 import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 
 import cpw.mods.fml.relauncher.Side;
@@ -46,24 +45,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-public class IMPWall extends BlockWall {
 
-	ImperiumBlocks Core;
+public class IMPWall extends BlockWall implements IMPGenericBlock {
+
+	private BlockHelper helper;
 	
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIcon;
 	
-	public IMPWall(ImperiumBlocks Core, String blockName, Properties blockProps) {		
+	public IMPWall(Properties blockProps, BlockHelper helper) {
         super(Blocks.sandstone);
 
-        this.Core = Core;
-        
-        this.setBlockName(blockName);
-        this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "stone")));
-        this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
+        this.helper = helper;
 		this.setCreativeTab(ImperiumBlocks.wallTab);
-		if(Float.valueOf(blockProps.getProperty("blast", "-1")) != -1)
-			setResistance(Float.valueOf(blockProps.getProperty("blast", "-1")));
+
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -74,15 +69,12 @@ public class IMPWall extends BlockWall {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerBlockIcons(IIconRegister p_149651_1_) {
+	public void registerBlockIcons(IIconRegister iconReg) {
 		try {
-			textureName = this.getUnlocalizedName().substring(5).replace("Wall", "");
-			
-			List textures = new ArrayList();
-			for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/"+ textureName)) textures.add(item);
-
-			if(textures.contains(textureName +".png")) blockIcon = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
-		} catch(Exception ex) { ex.printStackTrace(); }
+			blockIcon = helper.registerIcons(iconReg);
+		} catch (BlockHelper.NoSuchTexture noSuchTexture) {
+			ImperiumBlocks.log.warn(noSuchTexture.getMessage());
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -100,6 +92,11 @@ public class IMPWall extends BlockWall {
 	
     public boolean canPlaceTorchOnTop(World world, int x, int y, int z) {
 		return true;
+	}
+
+	@Override
+	public Item getItem() {
+		return null;
 	}
 }
 

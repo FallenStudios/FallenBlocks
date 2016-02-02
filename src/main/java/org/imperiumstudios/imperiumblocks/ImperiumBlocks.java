@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 Imperium Studios <https://imperiumstudios.org>
  * Copyright (c) 2016 garantiertnicht <>
  * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
@@ -91,7 +91,7 @@ public class ImperiumBlocks {
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e) throws IOException {
 		log = e.getModLog();
-		patchJar();
+		//patchJar();
 	}
     
 	@Mod.EventHandler
@@ -101,8 +101,7 @@ public class ImperiumBlocks {
         tabProps.load(this.getClass().getResourceAsStream("/assets/" + MODID.toLowerCase() + "/tabs.properties"));
 
 		InputStream inputStream;
-        
-        int blockNum = 0;
+		BlockHelper.init(this);
 
 		for(String blockFile: utils.getResourceFolderContent("assets/imperiumblocks/blocks/")) {
 			if(blockFile.equals("")) continue;		
@@ -115,7 +114,8 @@ public class ImperiumBlocks {
                 String name = blockFile.replace(".properties", "");
 				
 				for(String blockType: blockTypes) {
-					Block block = null;
+					/*
+					Block block;
                     Item item = null;
 					
 					if(blockType.equalsIgnoreCase("block")) block = new IMPBlock(this, name + "Block", blockProps);
@@ -130,7 +130,7 @@ public class ImperiumBlocks {
                         block = new IMPDoor(this, name + "Door", blockProps);
                         item = new DoorItem((IMPDoor) block);
                         ((IMPDoor) block).setDoorItem((DoorItem) item);
-                    } else if(blockType.equalsIgnoreCase("PressurePlate")) block = new IMPPressurePlate(name + "PressurePlate", blockProps);
+                    } else if(blockType.equalsIgnoreCase("PressurePlate")) block = new IMPPressureplate(name + "PressurePlate", blockProps);
                     else if(blockType.equalsIgnoreCase("Button")) block = new IMPButton(this, name + "Button", blockProps);
                     else if(blockType.equalsIgnoreCase("Pane")) block = new IMPPane(name + "Pane", blockProps);
 					else continue;
@@ -138,19 +138,29 @@ public class ImperiumBlocks {
 					GameRegistry.registerBlock(block, block.getUnlocalizedName().substring(5));
                     if(item != null)
                         GameRegistry.registerItem(item, item.getUnlocalizedName().substring(5));
+                        */
+
+					BlockHelper helper;
+					try {
+						helper = new BlockHelper(blockType, name, blockProps);
+					} catch(BlockHelper.InvalidBlockType exc) {
+						log.warn(exc.getMessage());
+						continue;
+					}
                     
                     if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("block")))
-                        blockIcon = (item == null ? Item.getItemFromBlock(block) : item);
+                        blockIcon = helper.getItem();
                     if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("stair")))
-                        stairIcon = (item == null ? Item.getItemFromBlock(block) : item);
+                        stairIcon = helper.getItem();
                     if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("slab")))
-                        slabIcon = (item == null ? Item.getItemFromBlock(block) : item);
+                        slabIcon = helper.getItem();
                     if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("fence")))
-                        fenceIcon = (item == null ? Item.getItemFromBlock(block) : item);
+                        fenceIcon = helper.getItem();
                     if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("wall")))
-                        wallIcon = (item == null ? Item.getItemFromBlock(block) : item);
+                        wallIcon = helper.getItem();
                     if(String.format("%s/%s", name, blockType).equalsIgnoreCase(tabProps.getProperty("misc")))
-                        miscIcon = (item == null ? Item.getItemFromBlock(block) : item);
+                        miscIcon = helper.getItem();
+
 				}
 			} else throw new FileNotFoundException("property file '" + blockFile + "' not found in the classpath");
 		}

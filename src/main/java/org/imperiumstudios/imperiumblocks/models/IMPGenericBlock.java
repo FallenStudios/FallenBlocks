@@ -24,18 +24,17 @@
  * THE SOFTWARE.
  */
 
-package org.imperiumstudios.imperiumblocks.CreativeTabs;
+package org.imperiumstudios.imperiumblocks.models;
 
 import net.minecraft.item.Item;
-import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 
-public class CreativeTabFences extends CreativeTabsIMP {
-    public CreativeTabFences() {
-        super("ImperiumFences");
-    }
-
-    @Override
-    public Item getTabIconItem() {
-        return ImperiumBlocks.fenceIcon;
-    }
+public interface IMPGenericBlock {
+    /**
+     * If the Block has a special Item, then return it here.<br/>
+     * Else you can return null or the Itemblock.<br/>
+     * <br/>
+     * <b>YOU SHOULD REGISTER THE ITEM YOUSELF!</b> This will not be done afterwards.
+     * @return null or Item Representation in GUI, alredy registered
+     */
+    Item getItem();
 }

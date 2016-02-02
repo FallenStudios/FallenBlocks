@@ -1,9 +1,9 @@
-/**
+/*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 Imperium Studios <https://imperiumstudios.org>
- * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  * Copyright (c) 2016 garantiertnicht <>
+ * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,16 +26,15 @@
 
 package org.imperiumstudios.imperiumblocks.models;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
+import net.minecraft.item.Item;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import org.imperiumstudios.imperiumblocks.Helper;
+import org.imperiumstudios.imperiumblocks.BlockHelper;
 import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 
 import cpw.mods.fml.relauncher.Side;
@@ -44,37 +43,30 @@ import net.minecraft.block.BlockFence;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 
-public class IMPFence extends BlockFence {
+public class IMPFence extends BlockFence implements IMPGenericBlock {
 	
-	ImperiumBlocks Core;
-	
+	private BlockHelper helper;
+
+	/*
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIcon;
+	*/
 	
-	public IMPFence(ImperiumBlocks Core, String blockName, Properties blockProps) {		
-        super(blockName, Helper.getMaterial(blockProps.getProperty("material", "rock")));
-
-        this.Core = Core;
-        
-        this.setBlockName(blockName);
-        this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "wood")));
-        this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
+	public IMPFence(Properties blockProps, BlockHelper helper) {
+        super(blockProps.getProperty("name"), BlockHelper.getMaterial(blockProps.getProperty("material", "rock")));
+        this.helper = helper;
 		this.setCreativeTab(ImperiumBlocks.fenceTab);
-		if(Float.valueOf(blockProps.getProperty("blast", "-1")) != -1)
-			setResistance(Float.valueOf(blockProps.getProperty("blast", "-1")));
+		this.useNeighborBrightness = true;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerBlockIcons(IIconRegister p_149651_1_) {
+	public void registerBlockIcons(IIconRegister iconReg) {
 		try {
-			textureName = this.getUnlocalizedName().substring(5).replace("Fence", "");
-			
-			List textures = new ArrayList();
-			for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/"+ textureName)) textures.add(item);
-
-			if(textures.contains(textureName +".png")) blockIcon = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
-		} catch(Exception ex) { ex.printStackTrace(); }
+			blockIcon = helper.registerIcons(iconReg);
+		} catch (BlockHelper.NoSuchTexture noSuchTexture) {
+			ImperiumBlocks.log.warn(noSuchTexture.getMessage());
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -92,5 +84,10 @@ public class IMPFence extends BlockFence {
 	
     public boolean canPlaceTorchOnTop(World world, int x, int y, int z) {
 		return true;
+	}
+
+	@Override
+	public Item getItem() {
+		return null;
 	}
 }

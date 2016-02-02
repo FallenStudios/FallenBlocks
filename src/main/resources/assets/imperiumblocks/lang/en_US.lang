@@ -26,13 +26,13 @@ tile.kupferdachWall.name=Copper Wall
 tile.devWall.name=Developer Wall
 
 tile.sandsteinTrapdoor.name=Sandstone Trapdoor
-tile.sweetHomePressurePlate.name=Creeper Pressure Plate
+tile.sweetHomepressureplate.name=Creeper Pressure Plate
 tile.kupferdachButton.name=Copper Button
 tile.stahltraegerPane.name=Iron Support Pane
 tile.devPane.name=Developer Pane
 tile.devTrapdoor.name=Developer Trapdoor
 tile.devButton.name=Developer Button
-tile.devPressurePlate.name=Developer Pressure Plate
+tile.devpressureplate.name=Developer Pressure Plate
 tile.devDoor.name=Developer Door
 item.devDoorItem.name=Developer Door
 tile.kupferdachDoor.name=Copper Door

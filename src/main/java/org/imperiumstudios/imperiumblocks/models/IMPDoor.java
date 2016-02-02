@@ -1,9 +1,9 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2016 Imperium Studios <https://imperiumstudios.org>
- * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  * Copyright (c) 2016 garantiertnicht <>
+ * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import org.imperiumstudios.imperiumblocks.Helper;
+import org.imperiumstudios.imperiumblocks.BlockHelper;
 import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 import org.imperiumstudios.imperiumblocks.Special.DoorItem;
 
@@ -43,9 +43,9 @@ import java.util.Properties;
 import java.util.Random;
 
 
-public class IMPDoor extends BlockDoor {
+public class IMPDoor extends BlockDoor implements IMPGenericBlock {
 
-    ImperiumBlocks Core;
+    private BlockHelper helper;
 
     @SideOnly(Side.CLIENT)
     private IIcon[] upper;
@@ -55,17 +55,10 @@ public class IMPDoor extends BlockDoor {
     public String name;
     private DoorItem item;
 
-    public IMPDoor(ImperiumBlocks Core, String blockName, Properties blockProps) {
-        super(Helper.getMaterial(blockProps.getProperty("material", "rock")));
-
-        this.Core = Core;
-        this.name = blockName.replaceFirst("Door", "");
-
-        this.setBlockName(blockName);
-        this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "stone")));
-        this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
-        if(Float.valueOf(blockProps.getProperty("blast", "-1")) != -1)
-            setResistance(Float.valueOf(blockProps.getProperty("blast", "-1")));
+    public IMPDoor(Properties blockProps, BlockHelper helper) {
+        super(BlockHelper.getMaterial(blockProps.getProperty("material", "rock")));
+        this.helper = helper;
+        this.useNeighborBrightness = true;
     }
 
     @Override
@@ -76,8 +69,16 @@ public class IMPDoor extends BlockDoor {
 
         this.upper = new IIcon[2];
         this.lower = new IIcon[2];
-        this.upper[0] = iconReg.registerIcon(ImperiumBlocks.MODID + ":" + name + "/doorUpper");
-        this.lower[0] = iconReg.registerIcon(ImperiumBlocks.MODID + ":" + name + "/doorLower");
+
+        try {
+            IIcon icons[] = helper.registerIcons(iconReg, "doorUpper", "doorLower");
+
+            this.upper[0] = icons[0];
+            this.lower[0] = icons[1];
+        } catch (BlockHelper.NoSuchTexture noSuchTexture) {
+            ImperiumBlocks.log.warn(noSuchTexture.getMessage());
+            return;
+        }
         this.upper[1] = new IconFlipped(this.upper[0], true, false);
         this.lower[1] = new IconFlipped(this.lower[0], true, false);
     }
@@ -167,4 +168,10 @@ public class IMPDoor extends BlockDoor {
         return (p_149650_1_ & 8) != 0 ? null : item;
     }
 
+    @Override
+    public Item getItem() {
+        DoorItem item = new DoorItem(this);
+        this.setDoorItem(item);
+        return item;
+    }
 }

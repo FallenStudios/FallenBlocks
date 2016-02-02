@@ -1,9 +1,9 @@
-/**
+/*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 Imperium Studios <https://imperiumstudios.org>
- * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  * Copyright (c) 2016 garantiertnicht <>
+ * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,11 +26,10 @@
 
 package org.imperiumstudios.imperiumblocks.models;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
-import org.imperiumstudios.imperiumblocks.Helper;
+import net.minecraft.item.Item;
+import org.imperiumstudios.imperiumblocks.BlockHelper;
 import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 
 import cpw.mods.fml.relauncher.Side;
@@ -39,9 +38,9 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 
-public class IMPBlock extends Block {
+public class IMPBlock extends Block implements IMPGenericBlock {
 
-	ImperiumBlocks Core;
+	BlockHelper helper;
 	
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIconBottom;
@@ -56,23 +55,30 @@ public class IMPBlock extends Block {
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIconWest;
 	
-	public IMPBlock(ImperiumBlocks Core, String blockName, Properties blockProps) {		
-        super(Helper.getMaterial(blockProps.getProperty("material", "rock")));
+	public IMPBlock(Properties blockProps, BlockHelper helper) {
+        super(BlockHelper.getMaterial(blockProps.getProperty("material", "rock")));
 
-        this.Core = Core;
-        
-        this.setBlockName(blockName);
-        this.setStepSound(Helper.getSoundType(blockProps.getProperty("sound", "stone")));
-        this.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
-        this.setLightLevel(Float.valueOf(blockProps.getProperty("light", "0.0F")));
+        this.helper = helper;
 		this.setCreativeTab(ImperiumBlocks.blockTab);
-		if(Float.valueOf(blockProps.getProperty("blast", "-1")) != -1)
-			setResistance(Float.valueOf(blockProps.getProperty("blast", "-1")));
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerBlockIcons(IIconRegister p_149651_1_) {
+	public void registerBlockIcons(IIconRegister iconReg) {
+		try {
+			IIcon icons[] = helper.registerIcons(iconReg, "bottom", "east", "north", "south", "top", "west");
+
+			blockIconBottom = icons[0];
+			blockIconEast =   icons[1];
+			blockIconNord =   icons[2];
+			blockIconSouth =  icons[3];
+			blockIconTop =    icons[3];
+			blockIconWest =   icons[5];
+		} catch (BlockHelper.NoSuchTexture exc) {
+			ImperiumBlocks.log.warn(exc.getMessage());
+		}
+
+		/*
 		try {
             textureName = this.getUnlocalizedName().substring(5).replace("Block", "");
 			ImperiumBlocks.log.info(textureName);
@@ -84,25 +90,34 @@ public class IMPBlock extends Block {
 			}
 
 			if(textures.contains(textureName +".png")) {
-				blockIconBottom = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
-				blockIconEast = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
-				blockIconNord = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
-				blockIconSouth = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
-				blockIconTop = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
-				blockIconWest = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
+				blockIconBottom = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
+				blockIconEast = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
+				blockIconNord = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
+				blockIconSouth = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
+				blockIconTop = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
+				blockIconWest = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/"+ textureName);
 			}
 
 			if(textures.contains("bottom.png") && textures.contains("east.png") && textures.contains("north.png") &&
 					textures.contains("south.png") && textures.contains("top.png") && textures.contains("west.png")) {
-				blockIconBottom = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/bottom");
-				blockIconEast = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/east");
-				blockIconNord = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/north");
-				blockIconSouth = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/south");
-				blockIconTop = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/top");
-				blockIconWest = p_149651_1_.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/west");
+				blockIconBottom = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/bottom");
+				blockIconEast = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/east");
+				blockIconNord = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/north");
+				blockIconSouth = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/south");
+				blockIconTop = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/top");
+				blockIconWest = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/west");
 			}
 			
 		} catch(Exception ex) { ex.printStackTrace(); }
+
+
+		blockIconBottom = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/bottom");
+		blockIconEast = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/east");
+		blockIconNord = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/north");
+		blockIconSouth = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/south");
+		blockIconTop = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/top");
+		blockIconWest = iconReg.registerIcon(ImperiumBlocks.MODID +":"+ textureName +"/west");
+		*/
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -125,5 +140,9 @@ public class IMPBlock extends Block {
 	    
 	    throw new IllegalArgumentException("Illegal side: "+ side);
 	}
-	
+
+	@Override
+	public Item getItem() {
+		return null;
+	}
 }

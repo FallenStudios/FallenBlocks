@@ -1,9 +1,9 @@
-/**
+/*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 Imperium Studios <https://imperiumstudios.org>
- * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  * Copyright (c) 2016 garantiertnicht <>
+ * Copyright (c) 2016 Kevin Olinger <https://kevinolinger.net>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,9 @@
 package org.imperiumstudios.imperiumblocks;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Enumeration;
@@ -37,7 +40,7 @@ import java.util.jar.JarFile;
 
 public class Utils {
 
-	public String[] getResourceFolderContent(String path) throws Exception {
+	public String[] getResourceFolderContent(String path) throws URISyntaxException, IOException {
 		URL dirURL = this.getClass().getClassLoader().getResource(path);
 	      
 		if(dirURL != null && dirURL.getProtocol().equals("file")) return new File(dirURL.toURI()).list();

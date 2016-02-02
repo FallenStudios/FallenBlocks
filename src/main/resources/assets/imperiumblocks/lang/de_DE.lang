@@ -26,13 +26,13 @@ tile.kupferdachWall.name=Kupfermauer
 tile.devWall.name=Entwicklermauer
 
 tile.sandsteinTrapdoor.name=Sandsteinfalltür
-tile.sweetHomePressurePlate.name=Creeperdruckplatte
+tile.sweetHomePressureplate.name=Creeperdruckplatte
 tile.kupferdachButton.name=Kupferknopf
 tile.stahltraegerPane.name=Stahlbalkenscheibe
 tile.devPane.name=Entwicklerscheibe
 tile.devTrapdoor.name=Entwicklerfalltür
 tile.devButton.name=Entwicklerknopf
-tile.devPressurePlate.name=Entwicklerdruckplatte
+tile.devPressureplate.name=Entwicklerdruckplatte
 tile.devDoor.name=Entwicklertür
 item.devDoorItem.name=Entwicklertür
 tile.kupferdachDoor.name=Kupfertür
