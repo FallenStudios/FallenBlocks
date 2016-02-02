@@ -198,7 +198,7 @@ public class ImperiumBlocks {
 		String v1 = scan.nextLine();
 		scan.close();
 
-		InputStream is = this.getClass().getResourceAsStream("/assets/impblock/version");
+		InputStream is = this.getClass().getResourceAsStream("/assets/imperiumblocks/version");
 		scan = new Scanner(is);
 		
 		String v2 = scan.nextLine();
