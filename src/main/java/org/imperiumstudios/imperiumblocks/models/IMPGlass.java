@@ -74,7 +74,7 @@ public class IMPGlass extends BlockGlass implements IMPGenericBlock {
 			blockIconEast =   icons[1];
 			blockIconNord =   icons[2];
 			blockIconSouth =  icons[3];
-			blockIconTop =    icons[3];
+			blockIconTop =    icons[4];
 			blockIconWest =   icons[5];
 		} catch (BlockHelper.NoSuchTexture exc) {
 			ImperiumBlocks.log.warn(exc.getMessage());

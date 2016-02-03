@@ -33,8 +33,8 @@ public interface IMPGenericBlock {
      * If the Block has a special Item, then return it here.<br/>
      * Else you can return null or the Itemblock.<br/>
      * <br/>
-     * <b>YOU SHOULD REGISTER THE ITEM YOUSELF!</b> This will not be done afterwards.
-     * @return null or Item Representation in GUI, alredy registered
+     * YOU SHOULD <b>NOT</b> REGISTER THE ITEM YOUSELF! This will be done afterwards.
+     * @return null or Item Representation in GUI
      */
     Item getItem();
 }

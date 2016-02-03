@@ -55,7 +55,6 @@ public class IMPWall extends BlockWall implements IMPGenericBlock {
 	
 	public IMPWall(Properties blockProps, BlockHelper helper) {
         super(Blocks.sandstone);
-
         this.helper = helper;
 		this.setCreativeTab(ImperiumBlocks.wallTab);
 

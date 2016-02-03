@@ -96,7 +96,6 @@ public class ImperiumBlocks {
     
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e) throws Exception {
-		Properties blockProps = new Properties();
         Properties tabProps = new Properties();
         tabProps.load(this.getClass().getResourceAsStream("/assets/" + MODID.toLowerCase() + "/tabs.properties"));
 
@@ -109,6 +108,7 @@ public class ImperiumBlocks {
 			inputStream = getClass().getClassLoader().getResourceAsStream("assets/imperiumblocks/blocks/"+ blockFile);
 			
 			if(inputStream != null) {
+                Properties blockProps = new Properties();
 				blockProps.load(inputStream);
 				String[] blockTypes = blockProps.getProperty("types", "block").split(",");
                 String name = blockFile.replace(".properties", "");

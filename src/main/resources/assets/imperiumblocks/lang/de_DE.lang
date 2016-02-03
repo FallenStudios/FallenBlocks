@@ -27,7 +27,7 @@
 tile.blockTestBlock.name=Testblock
 tile.kupferdachBlock.name=Kupferblock
 tile.sandsteinBlock.name=Sandstein
-tile.stahltraegerGlass.name=Stahlbalken
+tile.stahltraegerGlass.name=Stahlträger
 tile.devBlock.name=Entwicklerblock
 
 tile.kupferdachStair.name=Kupfertreppe
@@ -47,14 +47,14 @@ tile.sandsteinFence.name=Sandsteinzaun
 tile.devFence.name=Entwicklerzaun
 
 tile.sandsteinWall.name=Sandsteinmauer
-tile.stahltraegerWall.name=Stahlbalkenmauer
+tile.stahltraegerWall.name=Stahlträgermauer
 tile.kupferdachWall.name=Kupfermauer
 tile.devWall.name=Entwicklermauer
 
 tile.sandsteinTrapdoor.name=Sandsteinfalltür
 tile.sweetHomePressureplate.name=Creeperdruckplatte
 tile.kupferdachButton.name=Kupferknopf
-tile.stahltraegerPane.name=Stahlbalkenscheibe
+tile.stahltraegerPane.name=Stahlträgerscheibe
 tile.devPane.name=Entwicklerscheibe
 tile.devTrapdoor.name=Entwicklerfalltür
 tile.devButton.name=Entwicklerknopf

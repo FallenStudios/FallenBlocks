@@ -49,6 +49,8 @@ public class BlockHelper {
     private String name;
     private String type;
 
+    private boolean devLog;
+
     private static ImperiumBlocks Core;
 
     /**
@@ -81,6 +83,12 @@ public class BlockHelper {
         this.name = name;
         this.type = type;
 
+        if(Boolean.valueOf(blockProps.getProperty("devFunc001"))) {
+            info("Brutal Logging enabled!");
+            devLog = true;
+        } else
+            devLog = false;
+
         if(type == null || type.length() < 2)
             throw new InvalidBlockType("This Blocktype has an invalid name!");
 
@@ -91,12 +99,13 @@ public class BlockHelper {
 
         Object o;
 
-        Class imp = null;
+        Class imp;
         try {
             imp = Class.forName("org.imperiumstudios.imperiumblocks.models.IMP" + type);
         } catch (ClassNotFoundException e) {
             throw new InvalidBlockType("There is no such Block Type!");
         }
+
         Class inter[] = imp.getInterfaces();
         boolean flag = false;
 
@@ -105,6 +114,9 @@ public class BlockHelper {
                 flag = true;
                 break;
             }
+
+        if(!flag)
+            throw new InvalidBlockType("Class exists but not IMPGenericBlock!");
 
         flag = false;
         Class temp = imp;
@@ -136,19 +148,43 @@ public class BlockHelper {
             throw new InvalidBlockType("Class exists and implements IMPGenericBlock, but has no matchin Constructor (Properties, BlockHelper)!");
         }
 
+        if(devLog)
+            info("Block successfully initalized!");
 
         impGenericBlock = (IMPGenericBlock) o;
         block = (Block) o;
 
         block.setBlockName(name + type);
         block.setStepSound(BlockHelper.getSoundType(blockProps.getProperty("sound", "stone")));
-        block.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
-        block.setLightLevel(Float.valueOf(blockProps.getProperty("light", "0.0F")));
 
-        if(block.renderAsNormalBlock())
-            block.setLightLevel(Float.valueOf(blockProps.getProperty("light", "0.0F")));
+        try {
+            block.setHardness(Float.valueOf(blockProps.getProperty("hardness", "2")));
+        } catch (NumberFormatException exc) {
+            warn("Value in hardness is NO parsable Float!");
+            block.setHardness(2);
+        }
+
+        if(blockProps.getProperty("blast") != null)
+            try {
+                block.setResistance(Float.valueOf(blockProps.getProperty("blast")));
+            } catch (NumberFormatException exc) {
+                warn("Value in blast is NO parsable Float!");
+            }
+
+        if(block.isOpaqueCube())
+            try {
+                block.setLightLevel(Float.valueOf(blockProps.getProperty("light", "0.0F")));
+            } catch (NumberFormatException exc) {
+                warn("Value in light is NO parsable Float!");
+            }
+
+        if(getItem() != null)
+            GameRegistry.registerItem(getItem(), name + type + "Item");
 
         GameRegistry.registerBlock(block , name + type);
+
+        if(devLog)
+            info("Block Registered!");
     }
 
     /**
@@ -169,6 +205,14 @@ public class BlockHelper {
      */
     @Deprecated
     public String getTextureNameNoExc(String subName) {
+        if(devLog)
+            try {
+                info("Loading texture " + subName);
+                return getTextureName(subName);
+            } catch (NoSuchTexture noSuchTexture) {
+                warn("Texture " + subName + " not found!");
+            }
+
         return ImperiumBlocks.MODID +":"+ name +"/"+ subName;
     }
 
@@ -188,6 +232,9 @@ public class BlockHelper {
      * @throws NoSuchTexture If the texture does not exist
      */
     public String getTextureName(String subName) throws NoSuchTexture {
+        if(devLog)
+            info("Loading texture " + subName);
+
         List textures = new ArrayList();
         try {
             for(String item: Core.utils.getResourceFolderContent("assets/imperiumblocks/textures/blocks/" + name)) textures.add(item);
@@ -196,8 +243,16 @@ public class BlockHelper {
             return null;
         }
 
-        if(textures.contains(subName +".png")) return ImperiumBlocks.MODID +":"+ name +"/"+ subName;
-        else throw new NoSuchTexture(ImperiumBlocks.MODID +":"+ name +"/"+ subName);
+        if(textures.contains(subName +".png")) {
+            if(devLog)
+                info("Texture is " + ImperiumBlocks.MODID +":"+ name +"/"+ subName);
+            return ImperiumBlocks.MODID +":"+ name +"/"+ subName;
+        }
+        else {
+            if(devLog)
+                warn("Texture not found!");
+            throw new NoSuchTexture(ImperiumBlocks.MODID +":"+ name +"/"+ subName);
+        }
     }
 
     /**
@@ -207,6 +262,8 @@ public class BlockHelper {
      * @throws NoSuchTexture If the texure is missing.
      */
     public IIcon registerIcons(IIconRegister iconReg) throws NoSuchTexture {
+        if(devLog)
+            info("Loading texture");
         return iconReg.registerIcon(getTextureName());
     }
 
@@ -221,15 +278,21 @@ public class BlockHelper {
         IIcon icons[] = new IIcon[subNames.length];
         int i = 0;
         try {
+            if(devLog)
+                info("Try loading multiside textures...");
             for(String subName : subNames) {
                 icons[i++] = iconReg.registerIcon(getTextureName(subName));
             }
         } catch (NoSuchTexture noSuchTexture) {
-            for(; i < icons.length; i++) {
-                icons[i++] = iconReg.registerIcon(getTextureName());
+            if(devLog)
+                warn("Texture " + subNames[i] + " failed to load! Fallback to normal textures.");
+            for(i = 0; i < icons.length; i++) {
+                icons[i] = iconReg.registerIcon(getTextureName());
             }
         }
 
+        if(devLog)
+            info("Done!");
         return icons;
     }
 
@@ -239,6 +302,14 @@ public class BlockHelper {
      */
     public Item getItem() {
         return impGenericBlock.getItem() == null ? Item.getItemFromBlock(block) : impGenericBlock.getItem();
+    }
+
+    public void info(String msg) {
+        ImperiumBlocks.log.info(String.format("%s/%s: %s", name, type, msg));
+    }
+
+    public void warn(String msg) {
+        ImperiumBlocks.log.warn(String.format("%s/%s: %s", name, type, msg));
     }
 
     /**
