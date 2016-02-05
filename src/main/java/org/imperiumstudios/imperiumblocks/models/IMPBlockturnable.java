@@ -80,7 +80,7 @@ public class IMPBlockturnable extends Block implements IMPGenericBlock {
     @Override
     public void registerBlockIcons(IIconRegister iconReg) {
         try {
-            IIcon icons[] = helper.registerIcons(iconReg, "upside", "downside", "back", "font", "lefr", "right");
+            IIcon icons[] = helper.registerIcons(iconReg, "upside", "downside", "back", "font", "left", "right");
             blockIconUpside     = icons[0];
             blockIconDownside   = icons[1];
             blockIconBack       = icons[2];
@@ -96,8 +96,30 @@ public class IMPBlockturnable extends Block implements IMPGenericBlock {
     @Override
     public IIcon getIcon(int side, int meta) {
     	int k = getOrientation(meta); 
-    	return k > 5 ? this.blockIconUpside : (side == k ? (!isExtended(meta) && this.minX <= 0.0D && this.minY <= 0.0D && this.minZ <= 0.0D && this.maxX >= 1.0D && this.maxY >= 1.0D && this.maxZ >= 1.0D ? this.blockIconUpside : this.blockIcon) : (side == Facing.oppositeSide[k] ? this.blockIconDownside : this.blockIcon)); 
+    	//return k > 5 ? this.blockIconUpside : (side == k ? (!isExtended(meta) && this.minX <= 0.0D && this.minY <= 0.0D && this.minZ <= 0.0D && this.maxX >= 1.0D && this.maxY >= 1.0D && this.maxZ >= 1.0D ? this.blockIconUpside : this.blockIcon) : (side == Facing.oppositeSide[k] ? this.blockIconDownside : this.blockIcon)); 
 
+				if (meta == 0 && side == 0)
+					return blockIconDownside;
+				if (meta == 1 && side == 1)
+					return blockIconUpside;
+						if (side == 2)
+							return blockIconBack;
+						if (side == 3)
+							return blockIconFont;
+						if (side == 4)
+							return blockIconLeft;
+						if (side == 5)
+							return blockIconRight;
+				if (meta == 3 && side == 3)
+					return blockIconFont;
+				if (meta == 2 && side == 2)
+					return blockIconBack;
+				if (meta == 4 && side == 4)
+					return blockIconLeft;
+				if (meta == 5 && side == 5)
+					return blockIconRight;
+				return blockIcon;
+    	
     }
     
 	public static int determineOrientation(World par0World, int par1, int par2, int par3, EntityLivingBase par4EntityLivingBase) {
