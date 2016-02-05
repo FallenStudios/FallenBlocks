@@ -42,7 +42,7 @@ import net.minecraft.util.IIcon;
 
 public class IMPGlass extends BlockGlass implements IMPGenericBlock {
 	
-	private BlockHelper helper;
+	protected BlockHelper helper;
 	
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIconBottom;
