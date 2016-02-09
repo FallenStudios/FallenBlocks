@@ -36,7 +36,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import org.imperiumstudios.imperiumblocks.BlockHelper;
 import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
@@ -69,11 +68,9 @@ public class IMPBlockturnable extends Block implements IMPGenericBlock {
     }
 
     @Override
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
-		int l = determineOrientation(par1World, par2, par3, par4, par5EntityLivingBase); 
- 		par1World.setBlockMetadataWithNotify(par2, par3, par4, l, 2); 
- 		System.out.println("metadata for block: " + par1World.getBlockMetadata(par2, par3, par4)); 
-
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack stack) {
+		int l = BlockPistonBase.determineOrientation(world, x, y, z, placer);
+ 		world.setBlockMetadataWithNotify(x, y, z, l, 2);
     }
 
     @SideOnly(Side.CLIENT)
@@ -95,60 +92,29 @@ public class IMPBlockturnable extends Block implements IMPGenericBlock {
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon(int side, int meta) {
-    	int k = getOrientation(meta); 
-    	//return k > 5 ? this.blockIconUpside : (side == k ? (!isExtended(meta) && this.minX <= 0.0D && this.minY <= 0.0D && this.minZ <= 0.0D && this.maxX >= 1.0D && this.maxY >= 1.0D && this.maxZ >= 1.0D ? this.blockIconUpside : this.blockIcon) : (side == Facing.oppositeSide[k] ? this.blockIconDownside : this.blockIcon)); 
+        if(side == meta)
+            return blockIconFont;
 
-				if (meta == 0 && side == 0)
-					return blockIconDownside;
-				if (meta == 1 && side == 1)
-					return blockIconUpside;
-						if (side == 2)
-							return blockIconBack;
-						if (side == 3)
-							return blockIconFont;
-						if (side == 4)
-							return blockIconLeft;
-						if (side == 5)
-							return blockIconRight;
-				if (meta == 3 && side == 3)
-					return blockIconFont;
-				if (meta == 2 && side == 2)
-					return blockIconBack;
-				if (meta == 4 && side == 4)
-					return blockIconLeft;
-				if (meta == 5 && side == 5)
-					return blockIconRight;
-				return blockIcon;
-    	
+        if(side == Facing.oppositeSide[meta])
+            return blockIconBack;
+
+        int insertNameHere[] = {2,3,4,5,3,2};
+        //System.out.print('.');
+        int m = insertNameHere[meta];
+
+        if(side == m)
+            return blockIconRight;
+
+        if(side == Facing.oppositeSide[m])
+            return blockIconLeft;
+
+        int insertNameHere2[] = {4,5,0,0,5,4};
+
+        if(side == insertNameHere2[meta])
+            return blockIconUpside;
+
+        return blockIconDownside;
     }
-    
-	public static int determineOrientation(World par0World, int par1, int par2, int par3, EntityLivingBase par4EntityLivingBase) {
-		if (MathHelper.abs((float)par4EntityLivingBase.posX - (float)par1) < 2.0F && MathHelper.abs((float)par4EntityLivingBase.posZ - (float)par3) < 2.0F) {
-			double d0 = par4EntityLivingBase.posY + 1.82D - (double)par4EntityLivingBase.yOffset;
-
-			if (d0 - (double)par2 > 2.0D) {
-				return 1;
-			}
-
-			if ((double)par2 - d0 > 0.0D) {
-				return 0;
-			}
-		}
-		int l = MathHelper.floor_double((double)(par4EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-		return l == 0 ? 2 : (l == 1 ? 5 : (l == 2 ? 3 : (l == 3 ? 4 : 0)));
-	}
-
-	public static int getOrientation(int par0) {
-		return par0 & 7;
-	}
-
-	public static boolean isExtended(int par0) {
-		return (par0 & 8) != 0;
-	}
-
-	public int getRenderType() {
-		return 16;
-	}
 
     @Override
     public Item getItem() {

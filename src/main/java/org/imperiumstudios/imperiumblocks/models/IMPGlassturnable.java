@@ -28,10 +28,13 @@ package org.imperiumstudios.imperiumblocks.models;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.BlockGlass;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import org.imperiumstudios.imperiumblocks.BlockHelper;
@@ -39,9 +42,27 @@ import org.imperiumstudios.imperiumblocks.ImperiumBlocks;
 
 import java.util.Properties;
 
-public class IMPGlassturnable extends IMPGlass implements IMPGenericBlock {
+public class IMPGlassturnable extends BlockGlass implements IMPGenericBlock {
+    @SideOnly(Side.CLIENT)
+    protected IIcon blockIconUpside;
+    @SideOnly(Side.CLIENT)
+    protected IIcon blockIconDownside;
+    @SideOnly(Side.CLIENT)
+    protected IIcon blockIconBack;
+    @SideOnly(Side.CLIENT)
+    protected IIcon blockIconFont;
+    @SideOnly(Side.CLIENT)
+    protected IIcon blockIconLeft;
+    @SideOnly(Side.CLIENT)
+    protected IIcon blockIconRight;
+
+    private BlockHelper helper;
+
     public IMPGlassturnable(Properties blockProps, BlockHelper helper) {
-        super(blockProps, helper);
+        super(BlockHelper.getMaterial(blockProps.getProperty("material", "glass")), false);
+
+        this.helper = helper;
+        this.setCreativeTab(ImperiumBlocks.blockTab);
         //TODO 1.8: Enable Metadata
     }
 
@@ -56,14 +77,14 @@ public class IMPGlassturnable extends IMPGlass implements IMPGenericBlock {
     @Override
     public void registerBlockIcons(IIconRegister iconReg) {
         try {
-            IIcon icons[] = super.helper.registerIcons(iconReg, "downside", "right", "back", "font", "upside", "left");
+            IIcon icons[] = helper.registerIcons(iconReg, "downside", "right", "back", "font", "upside", "left");
 
-            super.blockIconBottom = icons[0]; //Down
-            super.blockIconEast =   icons[1]; //Right
-            super.blockIconNord =   icons[2]; //Back
-            super.blockIconSouth =  icons[3]; //Font
-            super.blockIconTop =    icons[4]; //Up
-            super.blockIconWest =   icons[5]; //Left
+            blockIconUpside     = icons[0];
+            blockIconDownside   = icons[1];
+            blockIconBack       = icons[2];
+            blockIconFont       = icons[3];
+            blockIconLeft       = icons[4];
+            blockIconRight      = icons[5];
         } catch (BlockHelper.NoSuchTexture exc) {
             ImperiumBlocks.log.warn(exc.getMessage());
         }
@@ -72,14 +93,32 @@ public class IMPGlassturnable extends IMPGlass implements IMPGenericBlock {
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon(int side, int meta) {
-        side -= meta + 2;
-        while(side < 0)
-            side += 6;
-        while(side > 5) {
-            super.helper.warn("Illegal side for Meta " + meta);
-            side -= 6;
-        }
+        if(side == meta)
+            return blockIconFont;
 
-        return super.getIcon(side, 0);
+        if(side == Facing.oppositeSide[meta])
+            return blockIconBack;
+
+        int insertNameHere[] = {2,3,4,5,3,2};
+        //System.out.print('.');
+        int m = insertNameHere[meta];
+
+        if(side == m)
+            return blockIconRight;
+
+        if(side == Facing.oppositeSide[m])
+            return blockIconLeft;
+
+        int insertNameHere2[] = {4,5,0,0,5,4};
+
+        if(side == insertNameHere2[meta])
+            return blockIconUpside;
+
+        return blockIconDownside;
+    }
+
+    @Override
+    public Item getItem() {
+        return null;
     }
 }
