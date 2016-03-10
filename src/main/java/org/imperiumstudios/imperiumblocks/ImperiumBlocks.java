@@ -55,9 +55,13 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = ImperiumBlocks.MODID, version = ImperiumBlocks.VERSION, name = ImperiumBlocks.NAME)
 public class ImperiumBlocks {
+	
+	private String GUIFORBIDDEN = "true";
 	
 	public Utils utils = new Utils();
 
@@ -91,6 +95,9 @@ public class ImperiumBlocks {
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e) throws IOException {
 		log = e.getModLog();
+		
+		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) GUIFORBIDDEN = "FALSE";
+
 		//patchJar();
 	}
     
@@ -226,7 +233,7 @@ public class ImperiumBlocks {
 		if(System.getProperty("os.name").startsWith("Win")) jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java.exe";
 		else jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java";
 
-		Runtime.getRuntime().exec(new String[] {jvm_location, "-jar", Minecraft.getMinecraft().mcDataDir + File.separator + "AssetsLoader.jar", Minecraft.getMinecraft().mcDataDir.getPath(), "http://blocks.imperium1871.de/assets.zip", "ImperiumBlocks-" + VERSION, MODID.toLowerCase(), v1, String.valueOf(true)});
+		Runtime.getRuntime().exec(new String[] {jvm_location, "-jar", Minecraft.getMinecraft().mcDataDir + File.separator + "AssetsLoader.jar", Minecraft.getMinecraft().mcDataDir.getPath(), "http://blocks.imperium1871.de/assets.zip", "ImperiumBlocks-" + VERSION, MODID.toLowerCase(), v1, String.valueOf(true), GUIFORBIDDEN});
 		
 		new FMLCommonHandler().exitJava(0, false);
 	}
