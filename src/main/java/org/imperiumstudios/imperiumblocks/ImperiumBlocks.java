@@ -98,7 +98,7 @@ public class ImperiumBlocks {
 		
 		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) GUIFORBIDDEN = true;
 
-		//patchJar();
+		patchJar();
 	}
     
 	@Mod.EventHandler
